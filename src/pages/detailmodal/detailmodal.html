@@ -1,0 +1,177 @@
+<!--head navbar starts-->
+<ion-header>
+  <ion-navbar>
+     <ion-title>
+                <div  *ngFor="let d of data">
+                  <div *ngIf="d.value == 1" class="text-color">
+                         Meal Details
+                     </div>
+                     <div *ngIf="d.value == 2" class="text-color">
+                         Review
+                     </div>
+                     <div *ngIf="d.value == 3" class="text-color">
+                         Restaurant and menu
+                     </div>
+                     <div *ngIf="d.value == 4" class="text-color">
+                         Best Match
+                     </div>
+                </div>
+   </ion-title>
+  </ion-navbar>
+</ion-header>
+<!--head navbar ends-->
+
+<!--body starts-->
+<ion-content padding id="ioncontent">
+
+      <div class="review" *ngFor="let d of data">
+
+<!--Meal detail and info-->
+        <div class="review" *ngIf="d.value == 1">
+            <div>
+                <h1>{{info.name}}</h1>
+                <hr>
+                {{info.description}}
+                <hr>
+            </div>
+               <ion-row>
+                  <ion-col col-6 style="border-right: solid 1px black">
+                       <b>Health Benefits</b>
+                       <p>One</p>
+                       <p>One</p>
+                       <p>One</p>
+                       <p>One</p>
+                       <p>One</p>
+                       <p>One</p>
+                   </ion-col>
+                  <ion-col col-6>
+                       <div style="margin-left:5px"><b>Nutrition</b></div>
+                        <ion-row padding>
+                           <ion-col col-6>
+                           one
+                           </ion-col>
+                           <ion-col col-6>
+                           15 %
+                           </ion-col>
+
+                           <ion-col col-6>
+                           one
+                           </ion-col>
+                           <ion-col col-6>
+                           15 %
+                           </ion-col>
+
+                           <ion-col col-6>
+                           one
+                           </ion-col>
+                           <ion-col col-6>
+                           15 %
+                           </ion-col>
+
+
+                           <ion-col col-6>
+                           one
+                           </ion-col>
+                           <ion-col col-6>
+                           15 %
+                           </ion-col>
+
+                           <ion-col col-6>
+                           one
+                           </ion-col>
+                           <ion-col col-6>
+                           15 %
+                           </ion-col>
+                       </ion-row>
+                  </ion-col>
+               </ion-row>
+           </div>
+<!--meal detail and info ends-->
+
+<!--review-->
+    <div class="review" *ngIf="d.value == 2" class="text-color">
+      <ion-row>
+        <ion-col col-6 style="text-align: center; color:black">
+          <h2> 4.3 <ion-icon name="star"></ion-icon> </h2>
+          Meal Rating
+        </ion-col>
+        <ion-col col-6 style="text-align: center; color:black">
+          <h2> 3.5 <ion-icon name="star"></ion-icon> </h2>
+          Restaurant Rating
+        </ion-col>
+      </ion-row>
+
+      <hr>
+
+        <ion-list no-lines>
+          <div *ngFor="let review of review">
+          <ion-item style="background-color: #DEF9D6" text-wrap>
+            {{review.author_name}}
+            <div *ngIf="review.author_name != 'No Reviews Found' ">
+            <ion-avatar item-left>
+              <img src={{review.profile_photo_url}}>
+            </ion-avatar>
+            <h4 > <font color="grey">10 days ago</font></h4>
+            <p style="padding-top:10px">{{review.text}}</p>
+            <ion-icon secondary name="happy"></ion-icon>
+            <br><br>
+            <button ion-button color="#fff" >
+              <ion-icon ios="ios-thumbs-up" md="md-thumbs-up"  class="direction dirct0" ></ion-icon><span>
+                        <p  padding-left="20sp"><font color="white">Helpful </font></p> </span>
+            </button>
+            </div>
+          </ion-item>
+          <hr>
+
+      </div>
+        </ion-list>
+  </div>
+<!--review wnds-->
+
+<!-- Restaurant and menu -->
+    <div  class="review" *ngIf="d.value == 3">
+      <ion-card>
+
+               <img src="assets/img/map_madison.png">
+               <ion-item>
+                 <ion-icon name="wine" item-left large ></ion-icon>
+                 <p>{{info.restaurant.name}} - {{info.restaurant.addressLane1}} <br>{{info.restaurant.city}} - {{info.restaurant.state}} </p>
+               </ion-item>
+
+               <ion-item>
+                 <span item-left>18 min</span>
+                 <span item-left>(2.6 mi)</span>
+                 <button ion-button icon-left clear item-end (click)="direct(info.restaurant.latitude,info.restaurant.longitude)">
+                   <ion-icon name="navigate"></ion-icon>
+                   Start
+                 </button>
+               </ion-item>
+
+             </ion-card>
+             <br>
+             <hr>
+             <b> Restaurant Menu </b>
+             <hr>
+             <ion-list style="background-color: #B9F496">
+                <button ion-item *ngFor="let menu_items of info.menu;let i =index" style="background-color: #B9F496" (click)="goto_detailview(info.menu[i])">
+                  {{info.menu[i].item.name}}
+                </button>
+              </ion-list>
+    </div>
+<!-- restaurant and menu ends -->
+
+<!-- bestmatch -->
+           <div class="review" *ngIf="d.value == 4">
+               <p>
+                We have picked this item for you because of your curret preference settingd.
+               </p>
+               <br>
+               <p>
+                Help us serve you better by updating your preference.
+               </p>
+               <button ion-button full (click)="goto_preference()" style="background-color:#F3A836">Go To My Preference</button>
+           </div>
+<!--best match ends-->
+      </div>
+</ion-content>
+<!--body ends-->

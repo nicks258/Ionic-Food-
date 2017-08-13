@@ -1,0 +1,6 @@
+for rogue in simulator :
+
+soa-maa-22.maa.arubathena.com - sim node
+sudo su jenkigns
+cd opt/aruba/central/app/simulator
+. ENV/bin/activate

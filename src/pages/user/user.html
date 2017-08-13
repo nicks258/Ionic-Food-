@@ -1,0 +1,32 @@
+<!--head navbar-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle class="text-color">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><p class="text-color">Profile</p></ion-title>
+  </ion-navbar>
+</ion-header>
+<!--head navbar ends-->
+
+<!-- body content-->
+<ion-content padding *ngIf='userReady'>
+    <ion-list>
+    <ion-item>
+    <ion-avatar class="profimg1">
+      <img [src]="user.picture" style="margin-left:20%;height:200px;width:200px;margin-top:10%">
+    </ion-avatar>
+  </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <button></button>
+    <button ion-item>Full Name :    {{user.name}} </button>
+    <button ion-item>Gender :  {{user.gender}} </button>
+    <button ion-item>Mail :  {{user.email}} </button>
+    <button></button>
+  </ion-list>
+
+
+</ion-content>
+<!--body content ends-->

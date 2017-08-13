@@ -1,0 +1,53 @@
+<!--head navbar starts-->
+<ion-header>
+  <ion-toolbar>
+      <button ion-button menuToggle class="text-color">
+      <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title><p class="text-color">search</p></ion-title>
+    </ion-toolbar>
+    <ion-toolbar class="searchbox">
+       <ion-searchbar [(ngModel)]='searchQuery' (ionChange)='fetchsearch()' (ionCancel)="resetsearch()">></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+<!--head navbar ends-->
+
+
+<!--body starts-->
+<ion-content class="body-content">
+
+<!-- show user typedsearch result-->
+<ion-card *ngIf="flag != 1">
+ <ion-card-header>
+    <b>Search Results <span style="float:right">{{sresults}} results</span></b>
+  </ion-card-header>
+  <ion-list>
+    <hr>
+    <button ion-item *ngFor="let item of items" (click)='goto_item(item)'>
+      <div style="color: grey"> <ion-icon name="search" style="padding-right:14px"></ion-icon> {{item.item.name}} </div>
+      <hr>
+    </button>
+     <hr style="color:black">
+  </ion-list>
+</ion-card>
+<!-- show user typedsearch result ends-->
+
+
+
+<!-- default template-->
+<ion-card *ngIf="flag == 1">
+  <ion-card-header>
+    <b>Explore Nearby</b>
+  </ion-card-header>
+
+  <ion-list>
+    <hr>
+    <button ion-item *ngFor="let item of item;" (click)='goto_fetchsearch(item)'>
+      <div style="color: grey"> {{item}} </div>
+      <hr>
+    </button>
+  </ion-list>
+</ion-card>
+<!-- default template ends-->
+</ion-content>
+<!--body ends-->

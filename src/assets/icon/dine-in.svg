@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="29px" height="28px" viewBox="0 0 29 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.1 (39012) - http://www.bohemiancoding.com/sketch -->
+    <title>Dine-in icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dine-in-icon">
+            <ellipse id="Icon-bg" fill="#3F6F72" cx="14.1718383" cy="14" rx="14.020339" ry="14"></ellipse>
+            <g id="ic_restaurant_black_24px" transform="translate(5.887093, 6.363636)">
+                <g id="Group">
+                    <path d="M7.01016949,5.72727273 L5.73559322,5.72727273 L5.73559322,1.27272727 L4.46101695,1.27272727 L4.46101695,5.72727273 L3.18644068,5.72727273 L3.18644068,1.27272727 L1.91186441,1.27272727 L1.91186441,5.72727273 C1.91186441,7.07636364 2.96976271,8.17090909 4.30169492,8.25363636 L4.30169492,14 L5.89491525,14 L5.89491525,8.25363636 C7.22684746,8.17090909 8.28474576,7.07636364 8.28474576,5.72727273 L8.28474576,1.27272727 L7.01016949,1.27272727 L7.01016949,5.72727273 Z M10.1966102,3.81818182 L10.1966102,8.90909091 L11.7898305,8.90909091 L11.7898305,14 L13.3830508,14 L13.3830508,1.27272727 C11.6241356,1.27272727 10.1966102,2.69818182 10.1966102,3.81818182 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+                    <polygon id="Shape" points="0 0 15.2949153 0 15.2949153 15.2727273 0 15.2727273"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

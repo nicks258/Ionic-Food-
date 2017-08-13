@@ -1,0 +1,61 @@
+page-login {
+    .cont{
+        margin-top: 50%;
+    }
+    .background-img{
+        background: url("../assets/img/background.png") no-repeat center center;
+	    background-size: 100%;
+	    background-position: 100% 100%;
+	    background-attachment: fixed;
+    }
+    .background-colr{
+        background-color: #9BE3ED;
+    }
+    .title{
+	    font-family: url-encode("../assets/fonts/Roboto-Regular.ttf");
+	    color: #DA6800 ;
+	    text-align: center;
+	    font-size: 280%;
+
+  }
+  .subTitle{
+	    color: #DA6800 ;
+	    font-family: url-encode("../assets/fonts/Roboto-Regular.ttf");
+	    font-size: 100%;
+	    text-align: center;
+  }
+  .bgcolor_textfield{
+        background-color: transparent;
+  }
+  .sign_btn{
+        background-color: #F6A623;
+        margin-top:12%;
+  }
+  .social-content{
+      background-color: white; 
+      border-radius:50px;
+  }
+  .social_icon{
+    font-size: 95%;
+    padding-left: 15%;
+    position: absolute;
+    margin-top: 8px;
+  }
+  .orsocial{
+  text-align : center;
+  color: white;
+  }
+  .social-fb{
+     background-color : #4554B0;
+     color: white;
+  }
+  .social-g{
+     background-color : #E35A50;
+     color: white;
+  }
+  .social-btn{
+     position: fixed;
+     bottom: 14%;
+     width : 100%;
+  }
+}

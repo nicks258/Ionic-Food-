@@ -1,0 +1,85 @@
+<!--head navbar-->
+<ion-header>
+   <ion-navbar>
+      <button ion-button menuToggle class="text-color">
+         <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>
+         <p class="text-color">Home</p>
+      </ion-title>
+      <ion-buttons end class="cart-space">
+         <button ion-button icon-only (click)="goto_cartpage()">
+            <img src="assets/icon/cart.svg">
+            <ion-badge id="notifications-badge">1</ion-badge>
+         </button>
+      </ion-buttons>
+      <ion-buttons end>
+         <button ion-button icon-only (click)='goto_searchpage()'>
+         <img src="assets/icon/search.svg">
+         </button>
+      </ion-buttons>
+   </ion-navbar>
+</ion-header>
+<!--head navbar ends-->
+
+
+
+
+<!--body content starts-->
+<ion-content class="body-content">
+   <div *ngFor="let dashboard of dashboardlist">
+      <!--dashboard card starts-->
+      <ion-card class="top_dist" style="height: 27.6vh">
+         <ion-card-header (click)="goto_detailview(dashboard)">
+            <ion-row>
+               <ion-col col-5>
+                  <img src="assets/img/background.png" style="height: 19vh">
+               </ion-col>
+               <ion-col col-7>
+                  <p class="fontsz" style="padding-top:5px">{{dashboard.item.name}}</p>
+                  <p class="fontsz">
+                     <ion-row>
+                        <ion-col col-6 class="amt">
+                  <div *ngIf="dashboard.choices[0]">$ {{dashboard.choices[0].min_price}}</div>
+                  <div *ngIf="!dashboard.choices[0]">NA</div>
+                  </ion-col>
+                  <ion-col col-6class="amt1">
+                  </ion-col>
+                  </ion-row>
+                  </p>
+                  <p class="fontsz amt">{{dashboard.restaurant.name}}</p>
+                  <ion-row>
+                     <ion-col class="img-dir"><img class="meter" src="assets/icon/meter-best.svg"></ion-col>
+                     <ion-col class="img-dir"><img src="assets/icon/direction-drive.svg"></ion-col>
+                     <ion-col class="img-dir"><img src="assets/icon/dine-in.svg"></ion-col>
+                     <ion-col class="img-dir"></ion-col>
+                     <ion-col class="img-dir"></ion-col>
+                  </ion-row>
+               </ion-col>
+            </ion-row>
+         </ion-card-header>
+         <ion-card-content class="location">
+            <hr>
+            <img src="assets/icon/map-icon.svg" class="direction dirct0"> <span>0.3 mi</span>
+            <span class="enddiv">
+               <p class="directionmap" (click)="direct(dashboard.lat_long[1],dashboard.lat_long[0])">
+                  Direction 
+                  <ion-icon name="compass"></ion-icon>
+               </p>
+            </span>
+            <hr>
+            <ion-list>
+               <ion-item padding *ngFor="let d of data" (click)="toggleDetails(d)" [ngStyle]="{'background-color': d.bgcolor, 'margin-bottom': '2px'}">
+               <ion-icon color="primary" item-right [name]="d.icon"></ion-icon>
+               {{d.title}}
+               <div *ngIf="d.showDetails">
+                  <div class="data1"></div>
+               </div>
+               </ion-item>
+            </ion-list>
+         </ion-card-content>
+      </ion-card>
+      <!--dashboard card ends-->
+   </div>
+   <img src="assets/icon/send.svg" class="send send-img" *ngIf="nextlength >= 3" (click)="loadmore()">
+</ion-content>
