@@ -1,3 +1,91 @@
 page-favourites {
-
+  .body-content {
+    background-color: #9BE3ED;
+  }
+  .card-background-page {
+    ion-card {
+      position: relative;
+      text-align: center;
+    }
+    .card-title {
+      position: absolute;
+      top: 36%;
+      font-size: 2.0em;
+      width: 100%;
+      font-weight: bold;
+      color: #fff;
+    }
+    .card-subtitle {
+      font-size: 1.0em;
+      position: absolute;
+      top: 52%;
+      width: 100%;
+      color: #fff;
+    }
+  }
+  .card-header-md,
+  .card-header-ios {
+    padding: 0px 0px 0px 0px;
+  }
+  .card-content-md,
+  .card-content-ios {
+    padding: 0px 0px 0px 0px;
+  }
+  .food_detail {
+  }
+  .toolbar-background {
+    background-color: #54cdde;
+  }
+  .fontsz {
+    font-size: 116%;
+  }
+  .meter,
+  .coupon {
+    padding-top: 24%;
+  }
+  .icon_width {
+    width: 27%;
+    height: 34px;
+    position: relative;
+    margin-left: 37%;
+  }
+  .detail_opt {
+    text-align: center;
+    margin-top: 5px;
+  }
+  .sidebor {
+    border-right: solid 1px grey;
+  }
+  .direction {
+    width: 5%;
+    display: inline;
+  }
+  .dirct0 {
+    margin-left: 2%;
+    width: 3%;
+  }
+  .dirct1,
+  .dirct2 {
+    margin-left: 5%;
+    width: 3%;
+  }
+  .enddiv {
+    float: right;
+    padding-right: 10px;
+  }
+  .row-line {
+    margin-top: 5px;
+  }
+  .top_dist {
+    margin-top: 11px;
+  }
+  .amt {
+    color: #4E827E;
+  }
+  .amt1 {
+    color: #970007
+  }
+  .directionmap {
+    text-decoration: none;
+  }
 }

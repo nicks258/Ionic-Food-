@@ -5,21 +5,23 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Favourites</ion-title>
+    <button ion-button menuToggle class="text-color">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><p class="text-color">Favourites</p></ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card>
+
+<ion-content  padding>
+  <ion-card  *ngFor="let favourities of favourities;let i =index" padding>
     <ion-card-header>
-      Header
+      {{favourities.item.name}}
     </ion-card-header>
     <ion-card-content>
-      The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.
+      {{favourities.item.description}}
     </ion-card-content>
   </ion-card>
 </ion-content>
