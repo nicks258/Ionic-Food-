@@ -58,7 +58,7 @@ export class LoginPage {
                 picture: user.picture
 
               }
-              )
+            )
 
               .then(function(){
                 // console.log("sumit"+env.user.email);

@@ -20,9 +20,10 @@
         "@angular/http": "4.1.2",
         "@angular/platform-browser": "4.1.2",
         "@angular/platform-browser-dynamic": "4.1.2",
+        "@ionic-native/background-geolocation": "^4.1.0",
         "@ionic-native/core": "3.10.2",
         "@ionic-native/facebook": "^3.12.1",
-        "@ionic-native/geolocation": "^4.0.1",
+        "@ionic-native/geolocation": "^4.1.0",
         "@ionic-native/google-plus": "^3.14.0",
         "@ionic-native/http": "^3.11.0",
         "@ionic-native/native-storage": "^3.12.1",
@@ -30,6 +31,7 @@
         "@ionic-native/status-bar": "3.10.2",
         "@ionic/storage": "2.0.1",
         "cordova-android": "^6.2.3",
+        "cordova-android-support-gradle-release": "0.0.2",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "^1.0.7",
         "cordova-plugin-device": "^1.1.6",
@@ -38,6 +40,7 @@
         "cordova-plugin-geolocation": "^2.4.3",
         "cordova-plugin-googleplus": "^5.1.1",
         "cordova-plugin-http": "^1.2.0",
+        "cordova-plugin-mauron85-background-geolocation": "^2.2.5",
         "cordova-plugin-nativestorage": "^2.2.2",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.3",
@@ -75,7 +78,12 @@
             "cordova-plugin-googleplus": {
                 "REVERSED_CLIENT_ID": "631829299141-41vpoka0fv6h30qfjpbo940nfaspmckt.apps.googleusercontent.com"
             },
-            "cordova-plugin-geolocation": {}
+            "cordova-plugin-geolocation": {},
+            "cordova-plugin-mauron85-background-geolocation": {
+                "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
+                "CONTENT_AUTHORITY": "$PACKAGE_NAME"
+            },
+            "cordova-android-support-gradle-release": {}
         },
         "platforms": [
             "android"

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, NgZone, ViewChild} from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -11,23 +11,75 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { UserPage } from '../pages/user/user';
 import { PreferencePage } from '../pages/preference/preference';
 import { NativeStorage} from "@ionic-native/native-storage";
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { FavouritesPage}  from '../pages/favourites/favourites'
-
+import {
+  BackgroundGeolocation, BackgroundGeolocationConfig,
+  BackgroundGeolocationResponse
+} from '@ionic-native/background-geolocation';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  public lng: any;
+  public lat: any;
+  public userLocation : any;
   @ViewChild(Nav) nav: Nav;
   user: any;
   rootPage: any ;
   userReady: boolean = false;
   pages: Array<{title: string, component: any, icon: any}>;
-
-  constructor(public platform: Platform,public nativeStorage: NativeStorage,public googlePlus: GooglePlus, public statusBar: StatusBar, public splashScreen: SplashScreen)
+  public watch: any;
+  constructor(public platform: Platform,private geolocation: Geolocation,public zone: NgZone,private backgroundGeolocation: BackgroundGeolocation,public nativeStorage: NativeStorage,public googlePlus: GooglePlus, public statusBar: StatusBar, public splashScreen: SplashScreen)
   {
     platform.ready().then(() => {
       let env = this;
-    // used for an example of ngFor and navigation
+      const config: BackgroundGeolocationConfig = {
+        desiredAccuracy: 10,
+        stationaryRadius: 20,
+        distanceFilter: 30,
+        debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+        stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+      };
+
+      this.backgroundGeolocation.configure(config)
+        .subscribe((location: BackgroundGeolocationResponse) => {
+
+          console.log(location);
+
+          // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+          // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+          // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+          this.backgroundGeolocation.finish(); // FOR IOS ONLY
+
+        });
+
+      this.watch = this.geolocation.watchPosition(config).filter((p: any) => p.code === undefined).subscribe((position: Geoposition) => {
+
+        console.log(position);
+
+        // Run update inside of Angular's zone
+        this.zone.run(() => {
+          env.lat = position.coords.latitude;
+          env.lng = position.coords.longitude;
+          env.nativeStorage.setItem('location',
+            {
+              lat: env.lat,
+              lng: env.lng
+
+            }
+
+          )
+        });
+        console.log("oo"+ env.lat);
+      });
+
+
+// start recording location
+      this.backgroundGeolocation.start();
+      console.log("fuck" + this.backgroundGeolocation.getLocations());
+
+      // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon:'home' },
       { title: 'Cart', component: CartPage, icon: 'cart' },
@@ -37,7 +89,7 @@ export class MyApp {
       { title: 'Favourites', component: FavouritesPage, icon: 'contact' }
     ];
 
-
+      console.log("opps "+env.lat + env.lng);
       this.nativeStorage.getItem('user')
         .then( function (data) {
           // user is previously logged and we have his data

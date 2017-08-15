@@ -8,8 +8,8 @@ import { LoadingController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
-
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationTracker } from '../../providers/location-tracker/location-tracker';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -30,10 +30,11 @@ export class HomePage {
   env1 : any;
   nav1 :any;
   loc : any;
-  constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public loadingCtrl: LoadingController,public http: Http) {
+  constructor(public navCtrl: NavController, public locationTracker: LocationTracker,public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
     //get user details
     let env = this;
     this.env1 = env;
+    // console.log(myApp.lat + " ");
     this.nativeStorage.getItem('user')
       .then( (data)=>{
         env.user = {
@@ -45,6 +46,26 @@ export class HomePage {
         console.log(env.user);
         env.getPreferences();
         env.userReady = true;
+        // let loadingPopup = this.loadingCtrl.create({
+        //   content: 'Fetching Location...',
+        //   spinner: 'circles'
+        // });
+        // loadingPopup.present();
+        // start(){
+        //   this.locationTracker.startTracking();
+        // }
+        //Code for Geo Location
+        // let watch = this.geolocation.watchPosition();
+        // watch.subscribe((data) => {
+        //   console.log(data.coords.latitude);
+        //   console.log(data.coords.longitude);
+        //   this.mylatitude = data.coords.latitude;
+        //   this.mylongitude = data.coords.longitude;
+        //   console.log("Lat->" + this.mylatitude + "Lang->" + this.mylongitude);
+        //   loadingPopup.dismiss();
+        //   this.Fetchdashboard(this.data_start, this.data_limit);
+        // });
+        // Hardcoaded LAT & LONG
         env.mylatitude = 37.40879;
         env.mylongitude = -121.98857;
         env.Fetchdashboard(env.data_start, env.data_limit);
@@ -60,8 +81,8 @@ export class HomePage {
         console.log(env.user);
         env.getPreferences();
         env.userReady = true;
-        env.mylatitude = 37.40879;
-        env.mylongitude = -121.98857;
+        // env.mylatitude = 37.40879;
+        // env.mylongitude = -121.98857;
         env.Fetchdashboard(env.data_start, env.data_limit);
       });
     // this.nativeStorage.getItem('USERID')
@@ -133,7 +154,15 @@ export class HomePage {
       spinner: 'circles'
     });
     loadingPopup.present();
-
+    this.nativeStorage.getItem('location')
+      .then( (data)=>{
+        this.mylatitude = data.lat;
+        this.mylongitude = data.lng;
+        console.log("loca->" + this.mylatitude + " " + this.mylongitude);
+      }, function(error){
+        console.log("Use real");
+        //dummy variables for browser use
+      });
     this.nativeStorage.getItem('USERID')
       .then( (data)=>{
         this.id = data.customerId;

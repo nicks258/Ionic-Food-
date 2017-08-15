@@ -13,14 +13,16 @@ import { DetailmodalPage } from '../pages/detailmodal/detailmodal';
 import { PreferencePage } from '../pages/preference/preference';
 import { CartPage } from '../pages/cart/cart';
 import { FavouritesPage}  from '../pages/favourites/favourites'
+// import { LocationTracker } from '../providers/location-tracker';
 import { UserPage } from '../pages/user/user';
 import { MenuinfodetailsPage } from '../pages/menuinfodetails/menuinfodetails';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
-import {GooglePlus} from "@ionic-native/google-plus";
-
+import { GooglePlus} from "@ionic-native/google-plus";
+import { LocationTracker } from '../providers/location-tracker/location-tracker';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 @NgModule({
   declarations: [
@@ -57,12 +59,16 @@ import {GooglePlus} from "@ionic-native/google-plus";
   ],
   providers: [
     GooglePlus,
+    LocationTracker,
+    BackgroundGeolocation,
     StatusBar,
     SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
     Facebook,
     NativeStorage,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    LocationTracker
   ]
 })
 export class AppModule {}
