@@ -46,25 +46,7 @@ export class HomePage {
         console.log(env.user);
         env.getPreferences();
         env.userReady = true;
-        // let loadingPopup = this.loadingCtrl.create({
-        //   content: 'Fetching Location...',
-        //   spinner: 'circles'
-        // });
-        // loadingPopup.present();
-        // start(){
-        //   this.locationTracker.startTracking();
-        // }
-        //Code for Geo Location
-        // let watch = this.geolocation.watchPosition();
-        // watch.subscribe((data) => {
-        //   console.log(data.coords.latitude);
-        //   console.log(data.coords.longitude);
-        //   this.mylatitude = data.coords.latitude;
-        //   this.mylongitude = data.coords.longitude;
-        //   console.log("Lat->" + this.mylatitude + "Lang->" + this.mylongitude);
-        //   loadingPopup.dismiss();
-        //   this.Fetchdashboard(this.data_start, this.data_limit);
-        // });
+
         // Hardcoaded LAT & LONG
         env.mylatitude = 37.40879;
         env.mylongitude = -121.98857;
@@ -154,10 +136,12 @@ export class HomePage {
       spinner: 'circles'
     });
     loadingPopup.present();
+
+    //Code for Geo Location
     this.nativeStorage.getItem('location')
       .then( (data)=>{
-        this.mylatitude = data.lat;
-        this.mylongitude = data.lng;
+        // this.mylatitude = data.lat;
+        // this.mylongitude = data.lng;
         console.log("loca->" + this.mylatitude + " " + this.mylongitude);
       }, function(error){
         console.log("Use real");

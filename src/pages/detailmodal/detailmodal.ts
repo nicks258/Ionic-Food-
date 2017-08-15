@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { PreferencePage } from '../preference/preference';
 import { LoadingController } from 'ionic-angular';
 import { DetailviewPage } from '../detailview/detailview';
 import { MenuinfodetailsPage } from '../menuinfodetails/menuinfodetails';
+import { Navbar } from 'ionic-angular';
 
 import { Http } from '@angular/http';
 @IonicPage()
@@ -12,6 +13,8 @@ import { Http } from '@angular/http';
   templateUrl: 'detailmodal.html',
 })
 export class DetailmodalPage {
+   objectKeys = Object.keys;
+  @ViewChild(Navbar) navBar: Navbar;
   restaurantInfo: any;
   data: Array<{value: number}> = [];
   details : any;
@@ -33,6 +36,9 @@ export class DetailmodalPage {
   data_stringify : any;
   mylatitude: any;
   mylongitude:any;
+  fats:any;
+  vitamins:any;
+  servings:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public loadingCtrl: LoadingController,public http: Http) {
      this.value = navParams.get("value");
      this.details = navParams.get("details");
@@ -48,6 +54,18 @@ export class DetailmodalPage {
      //background color
      if (this.value == 1)
      {
+         if(this.info.nutrition_info.fats.length > 0)
+          this.fats = 1;
+         else
+          this.fats = 0;
+        if(this.info.nutrition_info.vitamins.length > 0)
+          this.vitamins = 1;
+         else
+          this.vitamins = 0;
+        if(this.info.nutrition_info.servings.length > 0)
+          this.servings = 1;
+         else
+          this.servings = 0;
          this.bgcol ="#FEF9D9";
      }
      else if(this.value == 2){
@@ -70,8 +88,17 @@ export class DetailmodalPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailmodalPage');
     document.getElementById("ioncontent").style.backgroundColor = this.bgcol ;
+    this.setBackButtonAction()
   }
   
+  setBackButtonAction(){
+       console.log("back button pressed");
+       this.navBar.backButtonClick = () => {
+          this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+       }
+    }
+
+
   //go to preference screen
   goto_preference(){
      this.navCtrl.push(PreferencePage);
@@ -84,8 +111,8 @@ export class DetailmodalPage {
   }
 
   goto_detailview(data){
-    //this.data_stringify = JSON.stringify(data);
-    //console.log(this.data_stringify);
-    this.navCtrl.push(MenuinfodetailsPage,{data_search : data});
+    this.data_stringify = JSON.stringify(data);
+    console.log(this.data_stringify);
+    this.navCtrl.push(MenuinfodetailsPage,{data_search : data},{animate:true,animation:'transition',duration:500,direction:'forward'});
   }
 }

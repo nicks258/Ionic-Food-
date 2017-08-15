@@ -34,56 +34,42 @@
                 {{info.description}}
                 <hr>
             </div>
+
+             
+
                <ion-row>
-                  <ion-col col-6 style="border-right: solid 1px black">
-                       <b>Health Benefits</b>
-                       <p>One</p>
-                       <p>One</p>
-                       <p>One</p>
-                       <p>One</p>
-                       <p>One</p>
-                       <p>One</p>
+                  <ion-col col-12>
+                     <h5> Fats : </h5>
+                      <div *ngIf="fats == 1">
+                         <div *ngFor="let key of objectKeys(info.nutrition_info.fats)" >
+                          {{key}} - {{info.nutritionInfo.fats[key]}}
+                        </div>
+                       </div>
+                       <div *ngIf="fats != 1">
+                           NA
+                       </div>
+
+                       <h5>Vitamins :</h5>
+                       <div *ngIf="vitamins == 1">
+                         <div *ngFor="let key of objectKeys(info.nutrition_info.vitamins)" >
+                          {{key}} - {{info.nutritionInfo.vitamins[key]}}
+                        </div>
+                       </div>
+                       <div *ngIf="vitamins != 1">
+                           NA
+                       </div>
+                       
+                        <h5>Servings :</h5>
+                       <div *ngIf="servings == 1">
+                         <div *ngFor="let key of objectKeys(info.nutrition_info.servings)" >
+                          {{key}} - {{info.nutritionInfo.servings[key]}}
+                        </div>
+                       </div>
+                        <div *ngIf="servings != 1">
+                           NA
+                       </div>
+
                    </ion-col>
-                  <ion-col col-6>
-                       <div style="margin-left:5px"><b>Nutrition</b></div>
-                        <ion-row padding>
-                           <ion-col col-6>
-                           one
-                           </ion-col>
-                           <ion-col col-6>
-                           15 %
-                           </ion-col>
-
-                           <ion-col col-6>
-                           one
-                           </ion-col>
-                           <ion-col col-6>
-                           15 %
-                           </ion-col>
-
-                           <ion-col col-6>
-                           one
-                           </ion-col>
-                           <ion-col col-6>
-                           15 %
-                           </ion-col>
-
-
-                           <ion-col col-6>
-                           one
-                           </ion-col>
-                           <ion-col col-6>
-                           15 %
-                           </ion-col>
-
-                           <ion-col col-6>
-                           one
-                           </ion-col>
-                           <ion-col col-6>
-                           15 %
-                           </ion-col>
-                       </ion-row>
-                  </ion-col>
                </ion-row>
            </div>
 <!--meal detail and info ends-->

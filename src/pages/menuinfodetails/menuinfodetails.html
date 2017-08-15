@@ -13,7 +13,42 @@
     <hr>
     {{value.item.description}}
     <hr>
-    Nutrition Info :
+     <ion-row>
+                  <ion-col col-12>
+                      <h5> Fats : </h5>
+                      <div *ngIf="fats == 1">
+                         <div *ngFor="let key of objectKeys(value.item.nutritionInfo.fats)" >
+                          {{key}} - {{value.item.nutritionInfo.fats[key]}}
+                        </div>
+                       </div>
+                       <div *ngIf="fats != 1">
+                           NA
+                       </div>
 
+                      <h5> Vitamins : </h5>
+                       <div *ngIf="vitamins == 1">
+                         <div *ngFor="let key of objectKeys(value.item.nutritionInfo.vitamins)" >
+                          {{key}} - {{value.item.nutritionInfo.vitamins[key]}}
+                        </div>
+                       </div>
+                      <div *ngIf="vitamins != 1">
+                           NA
+                       </div>
+
+
+                       <h5> Servings : </h5>
+                       <div *ngIf="servings == 1">
+                         <div *ngFor="let key of objectKeys(value.item.nutritionInfo.servings)" >
+                          {{key}} - {{value.item.nutritionInfo.servings}}
+                        </div>
+                       </div>
+                       <div *ngIf="servings != 1">
+                           NA
+                       </div>
+
+
+
+                   </ion-col>
+               </ion-row>
 
 </ion-content>

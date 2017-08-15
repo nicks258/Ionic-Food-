@@ -44,7 +44,7 @@ export class DetailviewPage {
       this.sdata = JSON.parse(this.sdata);
       this.name = this.sdata.item.name;
       this.rname = this.sdata.restaurant.name;
-      this.cost = this.sdata.item.cost;
+      this.cost = this.sdata.choices[0].min_price;
       this.lat = this.sdata.lat_long[1];
       this.long = this.sdata.lat_long[0];
       this.itemId = this.sdata.item.id;
