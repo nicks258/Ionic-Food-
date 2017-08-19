@@ -15,11 +15,12 @@
 
 
 
-<ion-content  padding>
+<ion-content  padding class="body-content">
   <ion-card  *ngFor="let favourities of favourities;let i =index" padding>
     <ion-card-header>
       {{favourities.item.name}}
     </ion-card-header>
+    <hr>
     <ion-card-content>
       {{favourities.item.description}}
     </ion-card-content>

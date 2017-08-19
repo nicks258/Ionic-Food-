@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, Platform} from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
@@ -6,7 +6,10 @@ import { DetailmodalPage } from '../detailmodal/detailmodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { AlertController } from 'ionic-angular';
 import {NativeStorage} from "@ionic-native/native-storage";
+import { Navbar } from 'ionic-angular';
+
 @IonicPage()
 @Component({
   selector: 'page-detailview',
@@ -16,6 +19,7 @@ import {NativeStorage} from "@ionic-native/native-storage";
 
 
 export class DetailviewPage {
+  @ViewChild(Navbar) navBar: Navbar;
   menu: any;
   public sdata : any;
         name : any;
@@ -38,18 +42,21 @@ export class DetailviewPage {
         info : any;
         url :any;
   data: Array<{title: string, details: string, icon: string, bgcolor: string, showDetails: boolean, value: number}> = [];
-  constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public platform: Platform, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public geolocation: Geolocation,public http: Http) {
+  constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public alertCtrl: AlertController,public platform: Platform, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public geolocation: Geolocation,public http: Http) {
       this.sdata = navParams.get('data_search');
       console.log(this.sdata);
       this.sdata = JSON.parse(this.sdata);
       this.name = this.sdata.item.name;
       this.rname = this.sdata.restaurant.name;
-      this.cost = this.sdata.choices[0].min_price;
       this.lat = this.sdata.lat_long[1];
       this.long = this.sdata.lat_long[0];
       this.itemId = this.sdata.item.id;
       this.mylatitude = navParams.get('latitude');
       this.mylongitude = navParams.get('longitude');
+      // if (this.sdata.choices[0].min_price)
+      //     this.cost = this.sdata.choices[0].min_price;
+      // else
+      //     this.cost = "NA";
 
       this.data.push({
           title: 'Meal details and info',
@@ -101,7 +108,7 @@ export class DetailviewPage {
             value: value,
             details : this.sdata,
             current_detail : "ok"
-            });
+            },{animate:true,animation:'transition',duration:500,direction:'forward'});
       }
       console.log(value);
 
@@ -109,26 +116,48 @@ export class DetailviewPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailviewPage');
+     this.setBackButtonAction()
   }
+//back button action
+setBackButtonAction(){
+       console.log("back button pressed");
+       this.navBar.backButtonClick = () => {
+          console.log("Back button clicked");
+          this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+       }
+    }
+
 
 //add to favourite
 addfav(){
-    console.log("Hello Fav");
-  this.nativeStorage.getItem('USERID')
+  let enc = this;
+  enc.nativeStorage.getItem('USERID')
     .then( (data)=> {
-      let link = 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/favourites/menus/' + this.itemId;
+      let link = 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/favourites/menus/' + enc.itemId;
       let data1 = {};
       console.log("post data : " + JSON.stringify(data1));
       console.log("post url : " + link);
-      this.http.post(link, data1)
+      enc.http.post(link, data1)
         .subscribe(data => {
           console.log("Ok" + data1);
+          enc.confirm();
         }, error => {
           console.log("Oooops!");
         });
     }, function(error) {
       console.log("Use real mobile app for getting exact data");
       //dummy variables for browser use
+      let link = 'http://54.172.94.76:9000/api/v1/customers/'+15+'/favourites/menus/' + enc.itemId;
+      let data1 = {};
+      console.log("post data : " + JSON.stringify(data1));
+      console.log("post url : " + link);
+      enc.http.post(link, data1)
+        .subscribe(data => {
+          console.log("Ok" + data1);
+          enc.confirm();
+        }, error => {
+          console.log("Oooops!");
+        });
     });
 }
 
@@ -190,7 +219,7 @@ restaurantandinfo(value, category){
             value: value,
             details : this.sdata,
             current_detail : this.info
-            });
+            },{animate:true,animation:'transition',duration:500,direction:'forward'});
 
             loadingPopup.dismiss();
           }, 1000);
@@ -219,7 +248,7 @@ restaurantandinfo(value, category){
               value: value,
               details : this.sdata,
               current_detail : this.review
-            });
+            },{animate:true,animation:'transition',duration:500,direction:'forward'});
             loadingPopup.dismiss();
           }, 1000);
         },
@@ -248,11 +277,23 @@ mealdetail(value, category){
             value: value,
             details : this.sdata,
             current_detail : this.sdata.item
-            });
+            },{animate:true,animation:'transition',duration:500,direction:'forward'});
             loadingPopup.dismiss();
         },
         err => console.error(err)
       );
 
    }
+
+
+confirm(){
+   let alert = this.alertCtrl.create({
+      title: 'Favourites!',
+      subTitle: 'Item is added to your favourites',
+      buttons: ['OK']
+    });
+    alert.present();
+}
+
+
 }

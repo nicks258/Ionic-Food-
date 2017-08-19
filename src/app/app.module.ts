@@ -21,7 +21,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GooglePlus} from "@ionic-native/google-plus";
-import { LocationTracker } from '../providers/location-tracker/location-tracker';
+//  import { LocationTracker } from '../providers/location-tracker/location-tracker';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 @NgModule({
@@ -59,7 +59,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
   ],
   providers: [
     GooglePlus,
-    LocationTracker,
+    //LocationTracker,
     BackgroundGeolocation,
     StatusBar,
     SplashScreen,
@@ -67,8 +67,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
     Geolocation,
     Facebook,
     NativeStorage,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    LocationTracker
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    //LocationTracker
   ]
 })
 export class AppModule {}

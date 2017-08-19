@@ -101,7 +101,7 @@ export class DetailmodalPage {
 
   //go to preference screen
   goto_preference(){
-     this.navCtrl.push(PreferencePage);
+     this.navCtrl.push(PreferencePage,{},{animate:true,animation:'transition',duration:500,direction:'forward'});
   }
   
   //location

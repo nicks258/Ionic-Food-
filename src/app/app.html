@@ -1,11 +1,11 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-     <div *ngIf='userReady' class="profimg">
+     <div *ngIf='userReady' style="width:100%">
       <img [src]="user.picture">
     </div>
     <div *ngIf='!userReady'>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg" style="width:100%">
     </div>
     <!--  <ion-avatar item-start>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg">
@@ -18,11 +18,13 @@
 
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}" style="padding-right: 10%"></ion-icon> {{p.title}}
+        <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" style="float:right"></ion-icon>
       </button>
       <button menuClose ion-item (click)="logout()">
         <ion-icon name="arrow-back" style="padding-right: 10%"></ion-icon> logout
+        <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" style="float:right"></ion-icon>
       </button>
-      <button menuClose ion-item></button>
+       <button menuClose ion-item style="position:absolute;bottom: 0;text-align:center;color:grey">Contact us | More</button>
     </ion-list>
 
   </ion-content>

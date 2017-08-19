@@ -31,23 +31,18 @@ export class LoginPage {
       spinner: 'circles'
     });
     loading.present();
-
-
     let permissions = new Array<string>();
     let nav = this.navCtrl;
     let env = this;
     //the permissions your facebook app needs from the user
     permissions = ["public_profile", "email"];
-
     this.fb.login(permissions)
       .then(function(response){
         let userId = response.authResponse.userID;
         let params = new Array<string>();
-
         //Getting name and gender properties
         env.fb.api("/me?fields=name,email,gender", params)
           .then(function(user) {
-
             user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
             //now we have the users info, let's save it in the NativeStorage
             env.nativeStorage.setItem('user',
@@ -59,40 +54,29 @@ export class LoginPage {
 
               }
             )
-
               .then(function(){
-                // console.log("sumit"+env.user.email);
-                env.getUserId(user);
-
-                nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+                env.getUserId(user);  //get UserId
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
                 setTimeout(() => {
                 loading.dismiss();
                 }, 1000);
               }, function (error) {
-                 setTimeout(() => {
+                console.log("Use real mobile device to get facebook details");
+                env.getUserId(user);  //get UserId
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+                setTimeout(() => {
                 loading.dismiss();
-                // nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
-                console.log(error);
                 }, 1000);
               })
           })
       }, function(error){
         setTimeout(() => {
+                console.log("Error");
                 loading.dismiss();
-                //nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
                 console.log(error);
                 }, 1000);
       });
-    // let link = 'http://54.172.94.76:9000/api/v1/customers';
-    // let data =  {"email":"mehrasumit258@gmail.com","preferences":JSON.stringify(this.applyjson)};
-    // console.log("data to send" + JSON.stringify(data));
-    // this.http.post(link, data)
-    //   .subscribe(data => {
-    //     console.log("Ok" + data);
-    //     // this.data.response = data.body;
-    //   }, error => {
-    //     console.log("Oooops!");
-    //   });
 
   }
 
@@ -108,16 +92,15 @@ export class LoginPage {
             }
           )
           setTimeout(() => {
-            // this.dashboardlist = data.data;
-            // console.log(this.dashboardlist);
-            // this.nextlength = data.data.length;
-
           }, 1000);
         },
-        err => console.error(err)
-      );
-
+        err => {
+           console.error(err)
+         });
   }
+
+
+
   doGoogleLogin(){
     let env = this;
     let email1 : any;
@@ -142,21 +125,21 @@ export class LoginPage {
           picture: user.imageUrl
         })
           .then(function(){
-            nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
             setTimeout(() => {
              loading.dismiss();
           }, 1000);
           }, function (error) {
             loading.dismiss();
              setTimeout(() => {
-              //nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+              nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
               console.log(error);
              }, 1000);
           })
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
             console.log(error);
          }, 1000);
 

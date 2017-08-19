@@ -188,14 +188,11 @@ export class PreferencePage {
           name: "suvojit",
           gender: "male",
           picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar15@facebook.com"
+          email: "suvojitraj.kar18@facebook.com"
         };
         console.log(env.user.email);
         env.getcurrentpreference(env.user.email);
       });
-      //this.email = "suvojitraj.kar13@facebook.com";
-      //console.log(this.env.user.email);
-      //this.getcurrentpreference(this.env1.user.email);
 
   }
 

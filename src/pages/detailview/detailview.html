@@ -20,7 +20,8 @@
 		            <p class="fontsz">
 		            	<ion-row>
 			            	<ion-col col-6 class="amt">
-			            	  $ {{cost}}
+			            	   <div *ngIf="sdata.choices[0]">$ {{sdata.choices[0].min_price}}</div>
+                       <div *ngIf="!sdata.choices[0]">NA</div>
 			                </ion-col>
 
 		                </ion-row>
