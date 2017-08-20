@@ -34,6 +34,7 @@ export class HomePage {
   //, public locationTracker: LocationTracker
   constructor(public navCtrl: NavController,public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
     //get user details from localstorage
+    this.userReady = true;
     let loadingPopup = this.loadingCtrl.create({
       content: 'Checking preferences...',
       spinner: 'circles'

@@ -170,6 +170,7 @@ export class LoginPage {
         };
 
         env.userReady = true;
+        console.log( env.userReady);
       }, function(error){
         console.log(error);
       });
