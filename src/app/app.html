@@ -1,8 +1,8 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-     <div *ngIf='userReady' style="width:100%">
-      <img [src]="user.picture">
+     <div *ngIf='userReady'>
+      <img [src]="user.picture" style="width:100%">
     </div>
     <div *ngIf='!userReady'>
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg" style="width:100%">
