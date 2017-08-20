@@ -6,6 +6,7 @@ import { HomePage } from '../home/home';
 import { App, AlertController  } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { Events } from 'ionic-angular';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -16,7 +17,7 @@ export class LoginPage {
   userReady: boolean = false;
   FB_APP_ID: number = 125195224754920;
   constructor(public app: App,public http: Http,private alertCtrl: AlertController,public navCtrl: NavController,public fb: Facebook,public loadingCtrl: LoadingController, public nativeStorage: NativeStorage, public navParams: NavParams,
-              public googlePlus: GooglePlus ) {
+              public googlePlus: GooglePlus, public events: Events ) {
 
     this.fb.browserInit(this.FB_APP_ID, "v2.8");
   }
@@ -56,6 +57,7 @@ export class LoginPage {
             )
               .then(function(){
                 env.userReady = true;
+                env.events.publish('user:created',Date.now());
                 env.getUserId(user);  //get UserId
                 nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 setTimeout(() => {
@@ -137,6 +139,7 @@ export class LoginPage {
         })
           .then(function(){
             env.userReady = true;
+            env.events.publish('user:created',Date.now());
             nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             setTimeout(() => {
              loading.dismiss();
@@ -153,6 +156,7 @@ export class LoginPage {
          loading.dismiss();
         setTimeout(() => {
             env.alert();
+            //env.events.publish('user:created',Date.now());
             //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             console.log(error);
          }, 1000);
@@ -160,20 +164,21 @@ export class LoginPage {
       });
   }
   ionViewCanEnter(){
-    let env = this;
-    this.nativeStorage.getItem('user')
-      .then(function (data){
-        env.user = {
-          name: data.name,
-          gender: data.gender,
-          picture: data.picture
-        };
+    // let env = this;
+    // this.nativeStorage.getItem('user')
+    //   .then(function (data){
+    //     env.user = {
+    //       name: data.name,
+    //       gender: data.gender,
+    //       picture: data.picture
+    //     };
 
-        env.userReady = true;
-        console.log( env.userReady);
-      }, function(error){
-        console.log(error);
-      });
+    //     env.userReady = true;
+    //     env.events.publish('user:created',Date.now());
+    //     console.log( env.userReady);
+    //   }, function(error){
+    //     console.log(error);
+    //   });
   }
 
 

@@ -12,7 +12,8 @@ import { UserPage } from '../pages/user/user';
 import { PreferencePage } from '../pages/preference/preference';
 import { NativeStorage} from "@ionic-native/native-storage";
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { FavouritesPage}  from '../pages/favourites/favourites'
+import { FavouritesPage}  from '../pages/favourites/favourites';
+import { Events } from 'ionic-angular';
 //import {BackgroundGeolocation, BackgroundGeolocationConfig,BackgroundGeolocationResponse} from '@ionic-native/background-geolocation';
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,7 @@ export class MyApp {
   pages: Array<{title: string, component: any, icon: any}>;
   public watch: any;
   //private geolocation: Geolocation,public zone: NgZone,private backgroundGeolocation: BackgroundGeolocation
-  constructor(public platform: Platform,public nativeStorage: NativeStorage,public googlePlus: GooglePlus, public statusBar: StatusBar, public splashScreen: SplashScreen)
+  constructor(public events: Events,public platform: Platform,public nativeStorage: NativeStorage,public googlePlus: GooglePlus, public statusBar: StatusBar, public splashScreen: SplashScreen)
   {
     platform.ready().then(() => {
       let env = this;
@@ -74,6 +75,13 @@ export class MyApp {
       // console.log("fuck" + this.backgroundGeolocation.getLocations());
 
       // used for an example of ngFor and navigation
+
+     events.subscribe('user:created',(time) => {
+    env.userReady = true;
+    console.log(env.userReady);
+  });
+
+
     this.pages = [
       { title: 'Home', component: HomePage, icon:'home' },
       { title: 'Cart', component: CartPage, icon: 'cart' },
