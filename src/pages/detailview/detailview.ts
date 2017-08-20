@@ -131,7 +131,16 @@ setBackButtonAction(){
 //add to favourite
 addfav(){
   let enc = this;
-  enc.nativeStorage.getItem('USERID')
+
+  let loadingPopup = this.loadingCtrl.create({
+      content: 'Aadding to Favourites...',
+      spinner: 'circles'
+    });
+    loadingPopup.present();
+    console.log("Aadding to fav");
+    loadingPopup.dismiss();
+
+     enc.nativeStorage.getItem('USERID')
     .then( (data)=> {
       let link = 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/favourites/menus/' + enc.itemId;
       let data1 = {};

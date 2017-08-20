@@ -4,11 +4,10 @@
       <ion-row>
               <ion-col col-4>
                    <div *ngIf='userReady'><img [src]="user.picture" style="width:100%;"></div>
-                   <div *ngIf='!userReady'><img src="assets/img/user.png" style="width:100%;"></div>
-              </ion-col>
+                   </ion-col>
               <ion-col col-8>
-                  <div *ngIf='userReady' style="margin-top:19px;margin-left:16px">{{user.name}}</div>
-                  <div *ngIf='!userReady' style="margin-top:15px;margin-left:16px"> <h3>Suvojit Kar</h3>OOTA </div>
+                  <div *ngIf='userReady' style="margin-top:19px;margin-left:16px"><h3>{{user.name}}</h3></div>
+                  <p style="margin-left: 16px">OOTA</p>
               </ion-col>
           </ion-row>
      <!-- <div *ngIf='userReady'>

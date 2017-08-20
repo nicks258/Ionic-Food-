@@ -95,6 +95,12 @@ export class MyApp {
             env.splashScreen.hide();
         }, function (error) {
           //we don't have the user data so we will ask him to log in
+            env.user = {
+              name: "Suvojit Kar",
+              gender: "male",
+              picture: "assets/img/user.png"
+            };    
+            env.userReady = true;
             env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,  direction: 'forward'});//->
             env.splashScreen.hide();
         });
