@@ -55,6 +55,7 @@ export class LoginPage {
               }
             )
               .then(function(){
+                env.userReady = true;
                 env.getUserId(user);  //get UserId
                 nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 setTimeout(() => {
@@ -135,6 +136,7 @@ export class LoginPage {
           picture: user.imageUrl
         })
           .then(function(){
+            env.userReady = true;
             nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             setTimeout(() => {
              loading.dismiss();
