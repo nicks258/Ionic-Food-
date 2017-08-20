@@ -77,6 +77,21 @@ export class MyApp {
       // used for an example of ngFor and navigation
 
      events.subscribe('user:created',(time) => {
+       env.nativeStorage.getItem('user')
+        .then( function (data) {
+        env.user = {
+        name: data.name,
+        gender: data.gender,
+        picture: data.picture
+      };    
+        }, function (error) {  
+           env.user = {
+        name: "Raj kar",
+        gender: "male",
+        picture: "assets/img/user.png"
+      };    
+        });
+
     env.userReady = true;
     console.log(env.userReady);
   });
