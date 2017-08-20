@@ -34,7 +34,7 @@ export class UserPage {
         env.user = {
           name: "suvojit",
           gender: "male",
-          picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
+          picture: "assets/img/user.png",
           email: "suvojitraj.kar@facebook.com"
         };
         env.userReady = true;

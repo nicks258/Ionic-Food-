@@ -80,74 +80,38 @@ export class MyApp {
       { title: 'Preference', component: PreferencePage, icon: 'list-box'},
       { title: 'Search', component: SearchPage, icon: 'search'},
       { title: 'Profile', component: UserPage, icon: 'contact' },
-      { title: 'Favourites', component: FavouritesPage, icon: 'contact' }
+      { title: 'Favourites', component: FavouritesPage, icon: 'heart' }
     ];
 
-      console.log("opps "+env.lat + env.lng);
       this.nativeStorage.getItem('user')
         .then( function (data) {
-          // user is previously logged and we have his data
-          // we will let him access the app
-          // this.nav.setRoot(HomePage);
-          // this.rootPage = HomePage;
         env.user = {
         name: data.name,
         gender: data.gender,
         picture: data.picture
-      };
-          env.userReady = true;
-          setTimeout(() => {
-            env.nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});//->
-            this.splashScreen.hide();
-          }, 800);
-          //->env.nav.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
-
-
-
-
-          // setTimeout(() => {
-          //   this.splashScreen.hide();
-          // }, 800);
+      };    
+            env.userReady = true;
+            env.nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300,direction: 'forward'});//->
+            env.splashScreen.hide();
         }, function (error) {
           //we don't have the user data so we will ask him to log in
-           setTimeout(() => {
-            env.nav.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});//->
-            this.splashScreen.hide();
-          }, 800);
-          //->env.nav.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
-
-
-
-          // setTimeout(() => {
-          //   this.splashScreen.hide();
-          // }, 800);
+            env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,  direction: 'forward'});//->
+            env.splashScreen.hide();
         });
 
       this.statusBar.styleDefault();
     });
   }
-  // {
-  //   this.initializeApp();
-  //
-  //   // used for an example of ngFor and navigation
-  //   this.pages = [
-  //     { title: 'Home', component: HomePage }
-  //   ];
-  //
-  // }
 
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+
+    this.nav.setRoot(page.component,{},{animate:true,animation:'transition',duration:300,direction:'forward'});
   }
   logout() {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     let env = this;
-      let nav = this.nav;
+    let nav = this.nav;
     this.nativeStorage.remove('user');
-    env.nav.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+    env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,direction: 'forward'});
   }
 }

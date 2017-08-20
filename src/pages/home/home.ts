@@ -34,6 +34,12 @@ export class HomePage {
   //, public locationTracker: LocationTracker
   constructor(public navCtrl: NavController,public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
     //get user details from localstorage
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Checking preferences...',
+      spinner: 'circles'
+    });
+    loadingPopup.present();
+
     let env = this;
     this.env1 = env;
     this.nativeStorage.getItem('user')
@@ -58,6 +64,9 @@ export class HomePage {
         console.log(env.user);
         env.getPreferences();
       });
+       setTimeout(() => {
+      loadingPopup.dismiss();
+    },1100)
   }
 
 
@@ -98,7 +107,7 @@ export class HomePage {
         env.mylatitude = 37.40879;
         env.mylongitude = -121.98857;
         env.Fetchdashboard(env.data_start, env.data_limit);
-        this.navCtrl.setRoot(PreferencePage, {}, {animate:true,direction:'forward'});
+        this.navCtrl.setRoot(PreferencePage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
       }, error => {
         console.log("Oooops! Error in registration");
       });

@@ -23,10 +23,10 @@ export class FavouritesPage {
       spinner: 'circles'
     });
     loadingPopup.present();
+    this.getFavourites();
     setTimeout(() => {
-      this.getFavourites();
       loadingPopup.dismiss();
-    }, 1000);
+    }, 2000);
   }
 
   ionViewDidLoad() {
