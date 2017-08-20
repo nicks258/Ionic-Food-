@@ -39,7 +39,7 @@ export class MenuinfodetailsPage {
  setBackButtonAction(){
        console.log("back button pressed");
        this.navBar.backButtonClick = () => {
-          this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+          this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
     }
 

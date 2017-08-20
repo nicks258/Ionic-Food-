@@ -188,7 +188,7 @@ export class PreferencePage {
           name: "suvojit",
           gender: "male",
           picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar18@facebook.com"
+          email: "suvojitraj.kar19@facebook.com"
         };
         console.log(env.user.email);
         env.getcurrentpreference(env.user.email);
@@ -205,6 +205,8 @@ export class PreferencePage {
   }
   
   itemname(item){
+    if (item == "Total_Calories/Day")
+      item = "Total_Calories"
     let pos = item.indexOf("_");
     if (pos!=0){
       return item.replace("_"," ");

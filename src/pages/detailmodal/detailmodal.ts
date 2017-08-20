@@ -94,14 +94,14 @@ export class DetailmodalPage {
   setBackButtonAction(){
        console.log("back button pressed");
        this.navBar.backButtonClick = () => {
-          this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+          this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
     }
 
 
   //go to preference screen
   goto_preference(){
-     this.navCtrl.push(PreferencePage,{},{animate:true,animation:'transition',duration:500,direction:'forward'});
+     this.navCtrl.push(PreferencePage,{},{animate:true,animation:'transition',duration:300,direction:'forward'});
   }
   
   //location
@@ -113,6 +113,6 @@ export class DetailmodalPage {
   goto_detailview(data){
     this.data_stringify = JSON.stringify(data);
     console.log(this.data_stringify);
-    this.navCtrl.push(MenuinfodetailsPage,{data_search : data},{animate:true,animation:'transition',duration:500,direction:'forward'});
+    this.navCtrl.push(MenuinfodetailsPage,{data_search : data},{animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 }

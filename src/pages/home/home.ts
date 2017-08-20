@@ -9,6 +9,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
+import 'rxjs/add/operator/timeout'
 //import { LocationTracker } from '../../providers/location-tracker/location-tracker';
 @Component({
   selector: 'page-home',
@@ -52,7 +53,7 @@ export class HomePage {
           name: "suvojit",
           gender: "male",
           picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar18@facebook.com"
+          email: "suvojitraj.kar19@facebook.com"
         };
         console.log(env.user);
         env.getPreferences();
@@ -78,10 +79,6 @@ export class HomePage {
           console.error(err)
           console.log("ok - user is not yet registered")
           this.registerUser();
-          env.userReady = true;
-          env.mylatitude = 37.40879;
-          env.mylongitude = -121.98857;
-          env.Fetchdashboard(env.data_start, env.data_limit);
         }
       );
   }
@@ -89,6 +86,7 @@ export class HomePage {
 
   //register user after 1st time installation
   registerUser(){
+    let env = this;
     console.log("registering  user");
     let link = 'http://54.172.94.76:9000/api/v1/customers';
     let usrdetails = {"firstName":this.env1.user.name,"email":this.env1.user.email};
@@ -96,6 +94,10 @@ export class HomePage {
     this.http.post(link, usrdetails)
       .subscribe(data => {
         console.log("User registration successfull.");
+        env.userReady = true;
+        env.mylatitude = 37.40879;
+        env.mylongitude = -121.98857;
+        env.Fetchdashboard(env.data_start, env.data_limit);
         this.navCtrl.setRoot(PreferencePage, {}, {animate:true,direction:'forward'});
       }, error => {
         console.log("Oooops! Error in registration");
@@ -161,18 +163,18 @@ export class HomePage {
 
   //move from homepage to searchpage
   goto_searchpage(limit){
-    this.navCtrl.setRoot(SearchPage , {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    this.navCtrl.setRoot(SearchPage , {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //move from homepage to cartpage
   goto_cartpage(){
-     this.navCtrl.setRoot(CartPage, {}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+     this.navCtrl.setRoot(CartPage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //move from homepage to detailpage
   goto_detailview(data){
     this.data_stringify = JSON.stringify(data);
-    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, latitude : this.mylatitude , longitude : this.mylongitude}, {animate:true,animation:'transition',duration:500,direction:'forward'});
+    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, latitude : this.mylatitude , longitude : this.mylongitude}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //pagination

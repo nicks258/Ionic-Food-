@@ -108,7 +108,7 @@ export class DetailviewPage {
             value: value,
             details : this.sdata,
             current_detail : "ok"
-            },{animate:true,animation:'transition',duration:500,direction:'forward'});
+            },{animate:true,animation:'transition',duration:300,direction:'forward'});
       }
       console.log(value);
 
@@ -123,7 +123,7 @@ setBackButtonAction(){
        console.log("back button pressed");
        this.navBar.backButtonClick = () => {
           console.log("Back button clicked");
-          this.navCtrl.pop({animate:true,animation:'transition',duration:500,direction:'back'});
+          this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
     }
 
@@ -219,7 +219,7 @@ restaurantandinfo(value, category){
             value: value,
             details : this.sdata,
             current_detail : this.info
-            },{animate:true,animation:'transition',duration:500,direction:'forward'});
+            },{animate:true,animation:'transition',duration:300,direction:'forward'});
 
             loadingPopup.dismiss();
           }, 1000);
@@ -248,7 +248,7 @@ restaurantandinfo(value, category){
               value: value,
               details : this.sdata,
               current_detail : this.review
-            },{animate:true,animation:'transition',duration:500,direction:'forward'});
+            },{animate:true,animation:'transition',duration:300,direction:'forward'});
             loadingPopup.dismiss();
           }, 1000);
         },
@@ -277,7 +277,7 @@ mealdetail(value, category){
             value: value,
             details : this.sdata,
             current_detail : this.sdata.item
-            },{animate:true,animation:'transition',duration:500,direction:'forward'});
+            },{animate:true,animation:'transition',duration:300,direction:'forward'});
             loadingPopup.dismiss();
         },
         err => console.error(err)

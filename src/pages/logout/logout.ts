@@ -21,7 +21,7 @@ export class LogoutPage {
     // let nav = this.navCtrl;
     let env = this;
     env.nativeStorage.remove('user');
-    this.navCtrl.setRoot(LoginPage, {}, {animate: true, direction: 'forward'});
+    this.navCtrl.setRoot(LoginPage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
     // this.googlePlus.logout()
     //   .then(function (response) {
     //

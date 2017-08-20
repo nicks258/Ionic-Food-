@@ -44,7 +44,7 @@ export class FavouritesPage {
         data => {
           setTimeout(() => {
             enc.favourities = data.data;
-            console.log(JSON.stringify(this.favourities));
+            console.log(JSON.stringify(enc.favourities));
           }, 1000);
         },
         err => console.error(err)
@@ -58,6 +58,7 @@ export class FavouritesPage {
         data => {
           setTimeout(() => {
             enc.favourities = data.data;
+            console.log(JSON.stringify(enc.favourities));
           }, 1000);
         },
         err => console.error(err)

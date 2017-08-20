@@ -35,143 +35,312 @@
 <!-- right sidebar-->
 <div id="right">
     <ion-list  *ngIf="option_val == 1">
-        <div>Breakfast</div> <hr>
-        <ion-list radio-group>
+        <br>
+        <div style="color:#c0c0c0">BREAKFAST</div>
+        <br>       <!--  <ion-list radio-group>
           <ion-item *ngFor="let Breakfast of items.Budget.Breakfast">
             <ion-label>{{Breakfast}}</ion-label>
             <ion-radio value="{{Breakfast}}" item-left attr.id="items.Budget.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Budget.Breakfast-',Breakfast)" (click)="radioItem('items.Budget.Breakfast-'+Breakfast)"></ion-radio>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
+        <div radio-group>
+          <div *ngFor="let Breakfast of items.Budget.Breakfast" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+                <ion-col col-1>
+                   <ion-radio value="{{Breakfast}}" item-left attr.id="items.Budget.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Budget.Breakfast-',Breakfast)" (click)="radioItem('items.Budget.Breakfast-'+Breakfast)"></ion-radio>
+                </ion-col>
+                <ion-col col-11 style="margin-top: -12px">
+                    <ion-label>{{Breakfast}}</ion-label>
+                </ion-col>
+            </ion-row>
+          </div>
+        </div>
+
+
         <br>
-        <div>Lunch</div><hr>
-         <ion-list radio-group>
+         <div style="color:#c0c0c0">LUNCH</div>
+        <!--  <ion-list radio-group>
           <ion-item *ngFor="let Lunch of items.Budget.Lunch">
             <ion-label>{{Lunch}}</ion-label>
             <ion-radio value="items.Budget.Lunch-{{Lunch}}" item-left attr.id="items.Budget.Lunch-{{Lunch}}" [checked]="check_saved('items.Budget.Lunch-',Lunch)" (click)="radioItem('items.Budget.Lunch-'+Lunch)"></ion-radio>
           </ion-item>
-        </ion-list>
-        <div>Dinner</div><hr>
-        <ion-list radio-group>
+        </ion-list> -->
+        <br>
+        <div radio-group>
+          <div *ngFor="let Lunch of items.Budget.Lunch" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                    <ion-radio value="items.Budget.Lunch-{{Lunch}}" item-left attr.id="items.Budget.Lunch-{{Lunch}}" [checked]="check_saved('items.Budget.Lunch-',Lunch)" (click)="radioItem('items.Budget.Lunch-'+Lunch)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{Lunch}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+        </div>
+        <br>
+
+        <div style="color:#c0c0c0">DINNER</div>
+        <!-- <ion-list radio-group>
           <ion-item *ngFor="let Dinner of items.Budget.Dinner">
             <ion-label>{{Dinner}}</ion-label>
             <ion-radio value="items.Budget.Dinner-{{Dinner}}" item-left attr.id="items.Budget.Dinner-{{Dinner}}" [checked]="check_saved('items.Budget.Dinner-',Dinner)" (click)="radioItem('items.Budget.Dinner-'+Dinner)"></ion-radio>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
+        <br>
+        <div radio-group>
+          <div *ngFor="let Dinner of items.Budget.Dinner" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                    <ion-radio value="items.Budget.Dinner-{{Dinner}}" item-left attr.id="items.Budget.Dinner-{{Dinner}}" [checked]="check_saved('items.Budget.Dinner-',Dinner)" (click)="radioItem('items.Budget.Dinner-'+Dinner)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{Dinner}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+        </div>
         <br>
       </ion-list>
       
 
-
-
      <ion-list *ngIf="option_val == 2">
-         <ion-list radio-group>
+        <br>
+         <!-- <ion-list radio-group>
           <ion-item *ngFor="let Distance of items.Distance">
             <ion-label>{{Distance}}</ion-label>
             <ion-radio value="items.Distance-{{Distance}}" item-left attr.id="items.Distance-{{Distance}}" [checked]="check_saved('items.Distance-',Distance)" (click)="radioItem('items.Distance-'+Distance)"></ion-radio>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
+        <div radio-group>
+          <div *ngFor="let Distance of items.Distance" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+                <ion-col col-1>
+                    <ion-radio value="items.Distance-{{Distance}}" item-left attr.id="items.Distance-{{Distance}}" [checked]="check_saved('items.Distance-',Distance)" (click)="radioItem('items.Distance-'+Distance)"></ion-radio>
+                </ion-col>
+                <ion-col col-11 style="margin-top: -12px">
+                    <ion-label>{{Distance}}</ion-label>
+                </ion-col>
+            </ion-row>
+          </div>
+        </div>
       </ion-list>
       
-
-
-
 
 
       <ion-list *ngIf="option_val == 3">
-        <div>Breakfast</div> <hr>
-         <ion-list radio-group>
-          <ion-item *ngFor="let Breakfast of items.Calorie.Breakfast;">
+      <br>
+        <div style="color:#c0c0c0">BREAKFAST</div> 
+        <br>
+         <div radio-group>
+         <!--  <ion-item *ngFor="let Breakfast of items.Calorie.Breakfast;">
             <ion-label>{{Breakfast}}</ion-label>
             <ion-radio value="items.Calorie.Breakfast-{{Breakfast}}" item-left attr.id="items.Calorie.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Calorie.Breakfast-',Breakfast)" (click)="radioItem('items.Calorie.Breakfast-'+Breakfast)"></ion-radio>
-          </ion-item>
-        </ion-list>
+          </ion-item> -->
+          <div *ngFor="let Breakfast of items.Calorie.Breakfast;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                   <ion-radio value="items.Calorie.Breakfast-{{Breakfast}}" item-left attr.id="items.Calorie.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Calorie.Breakfast-',Breakfast)" (click)="radioItem('items.Calorie.Breakfast-'+Breakfast)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{Breakfast}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+
+        </div>
         <br>
-        <div>Lunch</div><hr>
-        <ion-list radio-group>
-          <ion-item *ngFor="let Lunch of items.Calorie.Lunch;">
+        <div style="color:#c0c0c0">LUNCH</div>
+        <br>
+        <div radio-group>
+          <!-- <ion-item *ngFor="let Lunch of items.Calorie.Lunch;">
             <ion-label>{{Lunch}}</ion-label>
             <ion-radio value="items.Calorie.Lunch-{{Lunch}}" item-left attr.id="items.Calorie.Lunch-{{lunch}}" [checked]="check_saved('items.Calorie.Lunch-',Lunch)" (click)="radioItem('items.Calorie.Lunch-'+Lunch)"></ion-radio>
-          </ion-item>
-        </ion-list>
-        <div>Dinner</div><hr>
-        <ion-list radio-group>
-          <ion-item *ngFor="let Dinner of items.Calorie.Dinner;">
+          </ion-item> -->
+          <div *ngFor="let Lunch of items.Calorie.Lunch;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                   <ion-radio value="items.Calorie.Lunch-{{Lunch}}" item-left attr.id="items.Calorie.Lunch-{{lunch}}" [checked]="check_saved('items.Calorie.Lunch-',Lunch)" (click)="radioItem('items.Calorie.Lunch-'+Lunch)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                  <ion-label>{{Lunch}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+        </div>
+        <br>
+        <div style="color:#c0c0c0">DINNER</div>
+        <br>
+        <div radio-group>
+         <!--  <ion-item *ngFor="let Dinner of items.Calorie.Dinner;">
             <ion-label>{{Dinner}}</ion-label>
             <ion-radio value="items.Calorie.Dinner-{{Dinner}}" item-left attr.id="items.Calorie.Dinner-{{Dinner}}" [checked]="check_saved('items.Calorie.Dinner-',Dinner)" (click)="radioItem('items.Calorie.Dinner-'+Dinner)"></ion-radio>
-          </ion-item>
-        </ion-list>
+          </ion-item> -->
+          <div *ngFor="let Dinner of items.Calorie.Dinner;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                     <ion-radio value="items.Calorie.Dinner-{{Dinner}}" item-left attr.id="items.Calorie.Dinner-{{Dinner}}" [checked]="check_saved('items.Calorie.Dinner-',Dinner)" (click)="radioItem('items.Calorie.Dinner-'+Dinner)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                    <ion-label>{{Dinner}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+
+        </div>
         <br>
       </ion-list>
 
       
 
-
-
       <ion-list *ngIf="option_val == 4">
-        <ion-item>
-          <ion-label>{{items["Total_Calories/Day"]}}</ion-label>
+        <br>
+        <div style="color:#c0c0c0">TOTAL CALORIES/DAY</div>
+        <br>
+        <div>
+           <!-- <ion-label>{{items["Total_Calories/Day"]}}</ion-label>
           <ion-checkbox attr.id="items.Total_Calories/Day-{{items['Total_Calories/Day']}}" (ionChange)="clickedItem('items.Total_Calories/Day-'+items['Total_Calories/Day'],$event)"   
-          [checked]="check_saved('items.Total_Calories/Day-',items['Total_Calories/Day'])"></ion-checkbox>
-        </ion-item>
+          [checked]="check_saved('items.Total_Calories/Day-',items['Total_Calories/Day'])"></ion-checkbox> -->
+          <ion-row>
+               <ion-col col-1>
+                    <ion-checkbox attr.id="items.Total_Calories/Day-{{items['Total_Calories/Day']}}" (ionChange)="clickedItem('items.Total_Calories/Day-'+items['Total_Calories/Day'],$event)"   
+                    [checked]="check_saved('items.Total_Calories/Day-',items['Total_Calories/Day'])"></ion-checkbox>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{items["Total_Calories/Day"]}}</ion-label>
+               </ion-col>
+            </ion-row>
+        </div>
       </ion-list>
 
 
-
-
+     
+     
       <ion-list *ngIf="option_val == 5">
-        <div>Breakfast</div> <hr>
-         <ion-list radio-group>
+        <br>
+        <div style="color:#c0c0c0">BREAKFAST</div> <br>
+         <!-- <ion-list radio-group>
           <ion-item *ngFor="let Breakfast of items.Meal_Time.Breakfast;">
             <ion-label>{{Breakfast}}</ion-label>
             <ion-radio value="{{Breakfast}}" item-left attr.id="items.Meal_Time.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Meal_Time.Breakfast-',Breakfast)" (click)="radioItem('items.Meal_Time.Breakfast-'+Breakfast)"></ion-radio>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
+        <div radio-group>
+          <div *ngFor="let Breakfast of items.Meal_Time.Breakfast;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                  <ion-radio value="{{Breakfast}}" item-left attr.id="items.Meal_Time.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Meal_Time.Breakfast-',Breakfast)" (click)="radioItem('items.Meal_Time.Breakfast-'+Breakfast)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                  <ion-label>{{Breakfast}}</ion-label>
+               </ion-col>
+            </ion-row>
+            <!-- <ion-label>{{Breakfast}}</ion-label>
+            <ion-radio value="{{Breakfast}}" item-left attr.id="items.Meal_Time.Breakfast-{{Breakfast}}" [checked]="check_saved('items.Meal_Time.Breakfast-',Breakfast)" (click)="radioItem('items.Meal_Time.Breakfast-'+Breakfast)"></ion-radio> -->
+          </div>
+        </div>
         <br>
-        <div>Lunch</div><hr>
-         <ion-list radio-group>
+        <div style="color:#c0c0c0">LUNCH</div><br>
+         <div radio-group>
+          <div *ngFor="let Lunch of items.Meal_Time.Lunch" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                   <ion-radio value="{{Lunch}}" item-left attr.id="items.Meal_Time.Lunch-{{Lunch}}" [checked]="check_saved('items.Meal_Time.Lunch-',Lunch)" (click)="radioItem('items.Meal_Time.Lunch-'+Lunch)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                  <ion-label>{{Lunch}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+        </div>
+         <!-- <ion-list radio-group>
           <ion-item *ngFor="let Lunch of items.Meal_Time.Lunch">
             <ion-label>{{Lunch}}</ion-label>
             <ion-radio value="{{Lunch}}" item-left attr.id="items.Meal_Time.Lunch-{{Lunch}}" [checked]="check_saved('items.Meal_Time.Lunch-',Lunch)" (click)="radioItem('items.Meal_Time.Lunch-'+Lunch)"></ion-radio>
           </ion-item>
-        </ion-list>
-        <div>Dinner</div><hr>
-        <ion-list radio-group>
+        </ion-list> -->
+        <br>
+        <div style="color:#c0c0c0">DINNER</div><br>
+        <div radio-group>
+          <div *ngFor="let Dinner of items.Meal_Time.Dinner" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+            <ion-row>
+               <ion-col col-1>
+                  <ion-radio value="{{Dinner}}" item-left attr.id="items.Meal_Time.Dinner-{{Dinner}}" [checked]="check_saved('items.Meal_Time.Dinner-',Dinner)" (click)="radioItem('items.Meal_Time.Dinner-'+Dinner)"></ion-radio>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                  <ion-label>{{Dinner}}</ion-label>
+               </ion-col>
+            </ion-row>
+          </div>
+        </div>
+        <!-- <ion-list radio-group>
           <ion-item *ngFor="let Dinner of items.Meal_Time.Dinner">
             <ion-label>{{Dinner}}</ion-label>
             <ion-radio value="{{Dinner}}" item-left attr.id="items.Meal_Time.Dinner-{{Dinner}}" [checked]="check_saved('items.Meal_Time.Dinner-',Dinner)" (click)="radioItem('items.Meal_Time.Dinner-'+Dinner)"></ion-radio>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
         <br>
       </ion-list>
 
 
 
-
       <ion-list  *ngIf="option_val == 6">
-        <ion-item *ngFor="let Cuisines of items.Cuisines;">
-          <ion-label>{{Cuisines}}</ion-label>
-          <ion-checkbox attr.id="items.Cuisines-{{Cuisine}}" (ionChange)="clickedItem('items.Cuisines-'+Cuisines,$event)"  [checked]="check_saved('items.Cuisines-',Cuisines)"></ion-checkbox>
-        </ion-item>
+        <br>
+        <div *ngFor="let Cuisines of items.Cuisines;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+          <ion-row>
+               <ion-col col-1>
+                  <ion-checkbox attr.id="items.Cuisines-{{Cuisine}}" (ionChange)="clickedItem('items.Cuisines-'+Cuisines,$event)"  [checked]="check_saved('items.Cuisines-',Cuisines)"></ion-checkbox>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                  <ion-label>{{Cuisines}}</ion-label>
+               </ion-col>
+            </ion-row>
+          <!-- <ion-label>{{Cuisines}}</ion-label>
+          <ion-checkbox attr.id="items.Cuisines-{{Cuisine}}" (ionChange)="clickedItem('items.Cuisines-'+Cuisines,$event)"  [checked]="check_saved('items.Cuisines-',Cuisines)"></ion-checkbox> -->
+        </div>
       </ion-list>
 
 
 
-
+       <!-- <ion-row>
+               <ion-col col-1>
+               </ion-col>
+               <ion-col col-11>
+               </ion-col>
+            </ion-row> -->
       <ion-list  *ngIf="option_val == 7">
-        <ion-item *ngFor="let Food_Types of items.Food_Types;">
-          <ion-label>{{Food_Types}}</ion-label>
-          <ion-checkbox attr.id="items.Food_Types-{{Food_Types}}" (ionChange)="clickedItem('items.Food_Types-'+Food_Types,$event)" [checked]="check_saved('items.Food_Types-',Food_Types)"></ion-checkbox>
-        </ion-item>
+      <br>
+        <div *ngFor="let Food_Types of items.Food_Types;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+         <ion-row>
+               <ion-col col-1>
+                    <ion-checkbox attr.id="items.Food_Types-{{Food_Types}}" (ionChange)="clickedItem('items.Food_Types-'+Food_Types,$event)" [checked]="check_saved('items.Food_Types-',Food_Types)"></ion-checkbox>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{Food_Types}}</ion-label>
+               </ion-col>
+            </ion-row>
+         <!--  <ion-label>{{Food_Types}}</ion-label>
+          <ion-checkbox attr.id="items.Food_Types-{{Food_Types}}" (ionChange)="clickedItem('items.Food_Types-'+Food_Types,$event)" [checked]="check_saved('items.Food_Types-',Food_Types)"></ion-checkbox> -->
+        </div>
       </ion-list>
 
 
 
 
       <ion-list *ngIf="option_val == 8">
-        <ion-item *ngFor="let Fast_Foods of items.Fast_Foods;">
-          <ion-label>{{Fast_Foods}}</ion-label>
-          <ion-checkbox attr.id="items.Fast_Foods-{{Fast_Foods}}" (ionChange)="clickedItem('items.Fast_Foods-'+Fast_Foods,$event)" [checked]="check_saved('items.Fast_Foods-',Fast_Foods)"></ion-checkbox>
-        </ion-item>
+        <br>
+        <div *ngFor="let Fast_Foods of items.Fast_Foods;" style="border-bottom:solid 1px #E0E0E0;margin-bottom:14px">
+         <ion-row>
+               <ion-col col-1>
+                   <ion-checkbox attr.id="items.Fast_Foods-{{Fast_Foods}}" (ionChange)="clickedItem('items.Fast_Foods-'+Fast_Foods,$event)" [checked]="check_saved('items.Fast_Foods-',Fast_Foods)"></ion-checkbox>
+               </ion-col>
+               <ion-col col-11 style="margin-top: -12px">
+                   <ion-label>{{Fast_Foods}}</ion-label>
+               </ion-col>
+            </ion-row>
+         <!--  <ion-label>{{Fast_Foods}}</ion-label>
+          <ion-checkbox attr.id="items.Fast_Foods-{{Fast_Foods}}" (ionChange)="clickedItem('items.Fast_Foods-'+Fast_Foods,$event)" [checked]="check_saved('items.Fast_Foods-',Fast_Foods)"></ion-checkbox> -->
+        </div>
       </ion-list>
 </div>
 <!-- right sidebar ends-->

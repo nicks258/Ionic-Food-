@@ -3,7 +3,7 @@ import { NavController, NavParams,LoadingController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { HomePage } from '../home/home';
-import { App  } from 'ionic-angular';
+import { App, AlertController  } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { GooglePlus } from '@ionic-native/google-plus';
 @Component({
@@ -15,7 +15,7 @@ export class LoginPage {
   user: any;
   userReady: boolean = false;
   FB_APP_ID: number = 125195224754920;
-  constructor(public app: App,public http: Http,public navCtrl: NavController,public fb: Facebook,public loadingCtrl: LoadingController, public nativeStorage: NativeStorage, public navParams: NavParams,
+  constructor(public app: App,public http: Http,private alertCtrl: AlertController,public navCtrl: NavController,public fb: Facebook,public loadingCtrl: LoadingController, public nativeStorage: NativeStorage, public navParams: NavParams,
               public googlePlus: GooglePlus ) {
 
     this.fb.browserInit(this.FB_APP_ID, "v2.8");
@@ -56,14 +56,15 @@ export class LoginPage {
             )
               .then(function(){
                 env.getUserId(user);  //get UserId
-                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 setTimeout(() => {
                 loading.dismiss();
                 }, 1000);
               }, function (error) {
                 console.log("Use real mobile device to get facebook details");
                 env.getUserId(user);  //get UserId
-                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+                //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+                env.alert();
                 setTimeout(() => {
                 loading.dismiss();
                 }, 1000);
@@ -73,7 +74,8 @@ export class LoginPage {
         setTimeout(() => {
                 console.log("Error");
                 loading.dismiss();
-                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+                env.alert();
+                //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 console.log(error);
                 }, 1000);
       });
@@ -100,6 +102,14 @@ export class LoginPage {
   }
 
 
+   alert(){
+      let alert = this.alertCtrl.create({
+      title: 'Login',
+      subTitle: 'Error in Login',
+      buttons: ['OK']
+    });
+    alert.present();
+   }
 
   doGoogleLogin(){
     let env = this;
@@ -125,21 +135,23 @@ export class LoginPage {
           picture: user.imageUrl
         })
           .then(function(){
-            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             setTimeout(() => {
              loading.dismiss();
           }, 1000);
           }, function (error) {
             loading.dismiss();
              setTimeout(() => {
-              nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+              env.alert();
+              //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
               console.log(error);
              }, 1000);
           })
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:500, direction: 'forward'});
+            env.alert();
+            //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             console.log(error);
          }, 1000);
 
