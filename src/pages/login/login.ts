@@ -150,8 +150,8 @@ export class LoginPage {
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            //env.alert();
-            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            env.alert();
+            //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             console.log(error);
          }, 1000);
 
