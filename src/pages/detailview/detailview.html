@@ -39,8 +39,12 @@
        </ion-card-header>
        <ion-card-content>
            <ion-row class="row-line">
-              <ion-col col-4 class="sidebor" (click)="addfav()">
-                 <img src="assets/icon/Favorites_icon.svg" class="icon_width">
+              <ion-col col-4 class="sidebor" (click)="alreadyaddfav()" *ngIf="favourite">
+                 <img src="assets/img/fav.png" class="icon_width">
+                 <p class="detail_opt" >Favourite</p>
+              </ion-col>
+               <ion-col col-4 class="sidebor" (click)="addfav()" *ngIf="!favourite">
+                 <img id="favimg" src="assets/icon/Favorites_icon.svg" class="icon_width">
                  <p class="detail_opt" >Favourite</p>
               </ion-col>
               <ion-col col-4 class="sidebor" >

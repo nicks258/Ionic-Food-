@@ -13,6 +13,7 @@ import { PreferencePage } from '../pages/preference/preference';
 import { NativeStorage} from "@ionic-native/native-storage";
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { FavouritesPage}  from '../pages/favourites/favourites';
+import { VersionPage}  from '../pages/version/version';
 import { Events } from 'ionic-angular';
 //import {BackgroundGeolocation, BackgroundGeolocationConfig,BackgroundGeolocationResponse} from '@ionic-native/background-geolocation';
 @Component({
@@ -103,7 +104,8 @@ export class MyApp {
       { title: 'Preference', component: PreferencePage, icon: 'list-box'},
       { title: 'Search', component: SearchPage, icon: 'search'},
       { title: 'Profile', component: UserPage, icon: 'contact' },
-      { title: 'Favourites', component: FavouritesPage, icon: 'heart' }
+      { title: 'Favourites', component: FavouritesPage, icon: 'heart' },
+      { title: 'Whats new', component: VersionPage, icon: 'list-box' }
     ];
 
       this.nativeStorage.getItem('user')

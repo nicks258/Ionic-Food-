@@ -60,7 +60,7 @@ export class HomePage {
           name: "suvojit",
           gender: "male",
           picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar19@facebook.com"
+          email: "suvojitraj.kar20@facebook.com"
         };
         console.log(env.user);
         env.getPreferences();
@@ -121,10 +121,20 @@ export class HomePage {
     this.http.post(link, usrdetails)
       .subscribe(data => {
         console.log("User registration successfull.");
-        env.userReady = true;
-        env.mylatitude = 37.40879;
-        env.mylongitude = -121.98857;
-        env.Fetchdashboard(env.data_start, env.data_limit);
+         env.geolocation.getCurrentPosition().then((resp) => {
+           console.log("ok");
+           env.mylatitude = resp.coords.latitude;
+           env.mylongitude = resp.coords.longitude;
+           console.log("lat"+env.mylatitude);
+           console.log("long"+env.mylongitude);
+           env.Fetchdashboard(env.data_start, env.data_limit);
+          }).catch((error) => {
+            console.log('Error getting location', error);
+            env.mylatitude = 37.40879;
+            env.mylongitude = -121.98857;
+            env.Fetchdashboard(env.data_start, env.data_limit);
+
+          });
         this.navCtrl.setRoot(PreferencePage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
       }, error => {
         console.log("Oooops! Error in registration");
@@ -152,7 +162,7 @@ export class HomePage {
           setTimeout(() => {
           enc.dashboardlist = data.data;
           if(start == 1 && enc.dashboardlist.length == 0)
-               enc.presentalert();
+               enc.presentalert(enc.mylatitude, enc.mylongitude);
           enc.nextlength = data.data.length;
           loadingPopup.dismiss();
          }, 1000);
@@ -171,7 +181,7 @@ export class HomePage {
           setTimeout(() => {
           enc.dashboardlist = data.data;
           if(start == 1 && enc.dashboardlist.length == 0)
-               enc.presentalert();
+               enc.presentalert(enc.mylatitude, enc.mylongitude);
           enc.nextlength = data.data.length;
           loadingPopup.dismiss();
          }, 1000);
@@ -182,10 +192,10 @@ export class HomePage {
 
   }
 
- presentalert() {
+ presentalert(lat, long) {
    let alert = this.alertCtrl.create({
       title: 'Restaurants',
-      subTitle: "No Restaurants Found near your location",
+      subTitle: "No Restaurants Found at : lat="+lat+"long"+long,
       buttons: ['OK']
     });
     alert.present();

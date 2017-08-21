@@ -16,7 +16,7 @@ import { FavouritesPage}  from '../pages/favourites/favourites'
 // import { LocationTracker } from '../providers/location-tracker';
 import { UserPage } from '../pages/user/user';
 import { MenuinfodetailsPage } from '../pages/menuinfodetails/menuinfodetails';
-
+import { VersionPage}  from '../pages/version/version';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -36,7 +36,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
     CartPage,
     UserPage,
     FavouritesPage,
-    MenuinfodetailsPage
+    MenuinfodetailsPage,
+    VersionPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,8 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
     CartPage,
     UserPage,
     FavouritesPage,
-    MenuinfodetailsPage
+    MenuinfodetailsPage,
+    VersionPage
   ],
   providers: [
     GooglePlus,

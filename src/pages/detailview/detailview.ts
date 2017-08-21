@@ -41,6 +41,8 @@ export class DetailviewPage {
         nextlength :  any;
         info : any;
         url :any;
+        favourite:boolean = false;
+        favourities : any;
   data: Array<{title: string, details: string, icon: string, bgcolor: string, showDetails: boolean, value: number}> = [];
   constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public alertCtrl: AlertController,public platform: Platform, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public geolocation: Geolocation,public http: Http) {
       this.sdata = navParams.get('data_search');
@@ -87,7 +89,67 @@ export class DetailviewPage {
           showDetails: false,
           value: 4
         });
+
+      let loadingPopup = this.loadingCtrl.create({
+      content: 'Loading Details...',
+      spinner: 'circles'
+    });
+    loadingPopup.present();
+
+      this.getFavourites();
+    setTimeout(() => {
+    loadingPopup.dismiss();
+  }, 1200);
+
   }
+  
+
+  //favourites
+  getFavourites()
+  {
+    let enc = this;
+    this.nativeStorage.getItem('USERID')
+      .then( (data)=>{
+
+    enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+data.customerId +'/favourites')
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          setTimeout(() => {
+            enc.favourities = data.data;
+            for(let i=0;i< enc.favourities.length;i++)
+            {
+               if (enc.favourities[i].item.name == enc.name)
+                   enc.favourite = true;
+            }
+            console.log(JSON.stringify(enc.favourities));
+          }, 1000);
+        },
+        err => console.error(err)
+      );
+  }, function(error){
+  console.log("Use real mobile app for getting exact data");
+  //dummy variables for browser use
+   enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+15+'/favourites')
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          setTimeout(() => {
+            enc.favourities = data.data;
+             for(let i=0;i< enc.favourities.length;i++)
+            {
+               if (enc.favourities[i].item.name == enc.name)
+                   enc.favourite = true;
+            }
+            console.log(JSON.stringify(enc.favourities));
+          }, 1000);
+        },
+        err => console.error(err)
+      );
+});
+
+  }
+
 
   //detailmodal value
   goto_detailmodal(value){
@@ -126,6 +188,16 @@ setBackButtonAction(){
           this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
     }
+
+//already
+alreadyaddfav(){
+     let alert = this.alertCtrl.create({
+      title: 'Favourites!',
+      subTitle: 'Item is already added to your favourite',
+      buttons: ['OK']
+    });
+    alert.present();
+}
 
 
 //add to favourite

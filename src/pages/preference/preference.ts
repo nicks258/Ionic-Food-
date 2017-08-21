@@ -188,7 +188,7 @@ export class PreferencePage {
           name: "suvojit",
           gender: "male",
           picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar19@facebook.com"
+          email: "suvojitraj.kar20@facebook.com"
         };
         console.log(env.user.email);
         env.getcurrentpreference(env.user.email);
