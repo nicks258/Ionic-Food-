@@ -81,9 +81,27 @@ export class HomePage {
         data => {
           console.log("ok - user is already registered")
           env.userReady = true;
-          env.mylatitude = 37.40879;
-          env.mylongitude = -121.98857;
-          env.Fetchdashboard(env.data_start, env.data_limit);
+          
+          // hard coded
+          // env.mylatitude = 37.40879;
+          // env.mylongitude = -121.98857;
+          //env.Fetchdashboard(env.data_start, env.data_limit);
+
+          //geolocation
+          this.geolocation.getCurrentPosition().then((resp) => {
+           console.log("ok");
+           env.mylatitude = resp.coords.latitude;
+           env.mylongitude = resp.coords.longitude;
+           console.log("lat"+env.mylatitude);
+           console.log("long"+env.mylongitude);
+           //env.Fetchdashboard(env.data_start, env.data_limit);
+          }).catch((error) => {
+            console.log('Error getting location', error);
+            env.mylatitude = 37.40879;
+            env.mylongitude = -121.98857;
+            env.Fetchdashboard(env.data_start, env.data_limit);
+
+          });
         },
         err => {
           console.error(err)
