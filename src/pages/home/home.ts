@@ -94,7 +94,7 @@ export class HomePage {
            env.mylongitude = resp.coords.longitude;
            console.log("lat"+env.mylatitude);
            console.log("long"+env.mylongitude);
-           //env.Fetchdashboard(env.data_start, env.data_limit);
+           env.Fetchdashboard(env.data_start, env.data_limit);
           }).catch((error) => {
             console.log('Error getting location', error);
             env.mylatitude = 37.40879;
