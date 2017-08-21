@@ -4,7 +4,7 @@ import { SearchPage } from '../search/search';
 import { DetailviewPage } from '../detailview/detailview';
 import { CartPage } from '../cart/cart';
 import { PreferencePage} from '../preference/preference'
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, AlertController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -32,7 +32,7 @@ export class HomePage {
   nav1 :any;
   loc : any;
   //, public locationTracker: LocationTracker
-  constructor(public navCtrl: NavController,public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
     //get user details from localstorage
     this.userReady = true;
     let loadingPopup = this.loadingCtrl.create({
@@ -69,7 +69,6 @@ export class HomePage {
       loadingPopup.dismiss();
     },1100)
   }
-
 
 
   //get user preferences
@@ -152,7 +151,8 @@ export class HomePage {
           console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/dashboard?email='+this.user.email+'&lat='+this.mylatitude+'&lng='+this.mylongitude+'&pn='+start+'&ps='+end);
           setTimeout(() => {
           enc.dashboardlist = data.data;
-          console.log(this.dashboardlist);
+          if(start == 1 && enc.dashboardlist.length == 0)
+               enc.presentalert();
           enc.nextlength = data.data.length;
           loadingPopup.dismiss();
          }, 1000);
@@ -170,6 +170,8 @@ export class HomePage {
           console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+enc.id+'/dashboard?email='+enc.user.email+'&lat='+enc.mylatitude+'&lng='+enc.mylongitude+'&pn='+start+'&ps='+end);
           setTimeout(() => {
           enc.dashboardlist = data.data;
+          if(start == 1 && enc.dashboardlist.length == 0)
+               enc.presentalert();
           enc.nextlength = data.data.length;
           loadingPopup.dismiss();
          }, 1000);
@@ -180,7 +182,14 @@ export class HomePage {
 
   }
 
-
+ presentalert() {
+   let alert = this.alertCtrl.create({
+      title: 'Restaurants',
+      subTitle: "No Restaurants Found near your location",
+      buttons: ['OK']
+    });
+    alert.present();
+}
 
   //get direction
   direct(x,y){
