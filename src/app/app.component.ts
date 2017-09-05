@@ -1,4 +1,4 @@
-import {Component, NgZone, ViewChild} from '@angular/core';
+import { Component, NgZone, ViewChild} from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -46,7 +46,7 @@ export class MyApp {
       //   .subscribe((location: BackgroundGeolocationResponse) => {
 
       //     console.log(location);
-      //     this.backgroundGeolocation.finish(); 
+      //     this.backgroundGeolocation.finish();
 
       //   });
 
@@ -84,13 +84,13 @@ export class MyApp {
         name: data.name,
         gender: data.gender,
         picture: data.picture
-      };    
-        }, function (error) {  
+      };
+        }, function (error) {
            env.user = {
         name: "Raj kar",
         gender: "male",
         picture: "assets/img/user.png"
-      };    
+      };
         });
 
     env.userReady = true;
@@ -114,17 +114,22 @@ export class MyApp {
         name: data.name,
         gender: data.gender,
         picture: data.picture
-      };    
+      };
             env.userReady = true;
+            console.log("userReady->" + env.userReady);
             env.nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300,direction: 'forward'});//->
             env.splashScreen.hide();
         }, function (error) {
-          //we don't have the user data so we will ask him to log in
+
+          console.log("userReady->" + env.userReady);
+          //we don't have the user data so we will ask him to
+          //
+          // log in
             // env.user = {
             //   name: "Suvojit Kar",
             //   gender: "male",
             //   picture: "assets/img/user.png"
-            // };    
+            // };
             // env.userReady = true;
             env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,  direction: 'forward'});//->
             env.splashScreen.hide();
