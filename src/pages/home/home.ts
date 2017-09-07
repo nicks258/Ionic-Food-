@@ -51,12 +51,12 @@ export class HomePage {
   env1 : any;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
-    
+
     //rootscope variables console
     console.log(base_url);
     console.log(do_get());
     console.log(do_post());
- 
+
 
     //get user details from localstorage
     this.userReady = true;
@@ -70,14 +70,15 @@ export class HomePage {
     this.env1 = env;
     this.nativeStorage.getItem('user')
       .then( (data)=>{
-        env.user = get_userdetails();          //user details
+        // env.user = get_userdetails();          //user details
+        env.user = { name: data.name, gender: data.gender, picture: data.picture, email: data.email };
         console.log(env.user);
-        env.getPreferences(); 
+        env.getPreferences();
       }, function(error){
         console.log("Use real mobile app for getting exact data");
         env.user = dummy_user;                 //dummy data for browser use
         console.log(env.user);
-        env.getPreferences(); 
+        env.getPreferences();
       });
        setTimeout(() => {
       loadingPopup.dismiss();
@@ -121,7 +122,7 @@ export class HomePage {
         }
       );
   }
-  
+
 
   //register user after 1st time installation
   registerUser(){
@@ -171,7 +172,7 @@ export class HomePage {
     });
     loadingPopup.present();
     console.log("Fetching dashboard");
-    
+
     this.nativeStorage.getItem('USERID')
       .then( (data)=>{
         enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/dashboard?email='+enc.user.email+'&lat='+enc.mylatitude+'&lng='+enc.mylongitude+'&pn='+start+'&ps='+end)
