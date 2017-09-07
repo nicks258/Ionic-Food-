@@ -10,14 +10,18 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/timeout';
-//import { LocationTracker } from '../../providers/location-tracker/location-tracker';
 
 
 
-
+//rootscope variables and functions
 declare function do_get();
 declare function do_post();
+declare function get_userdetails();
 declare var base_url;
+declare var geolocation;
+declare var dummy_user;
+declare var dummy_lat;
+declare var dummy_long;
 
 
 
@@ -27,7 +31,11 @@ declare var base_url;
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
+
+
 export class HomePage {
+  //variables
   public dashboardlist : any;
   nextlength : any;
   user: any;
@@ -41,14 +49,16 @@ export class HomePage {
   mylatitude : any;
   mylongitude : any;
   env1 : any;
-  nav1 :any;
-  loc : any;
-  //, public locationTracker: LocationTracker
+
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
-    //get user details from localstorage
+    
+    //rootscope variables console
     console.log(base_url);
     console.log(do_get());
     console.log(do_post());
+ 
+
+    //get user details from localstorage
     this.userReady = true;
     let loadingPopup = this.loadingCtrl.create({
       content: 'Checking preferences...',
@@ -60,25 +70,14 @@ export class HomePage {
     this.env1 = env;
     this.nativeStorage.getItem('user')
       .then( (data)=>{
-        env.user = {
-          name: data.name,
-          gender: data.gender,
-          picture: data.picture,
-          email: data.email
-        };
+        env.user = get_userdetails();          //user details
         console.log(env.user);
-        env.getPreferences();
+        env.getPreferences(); 
       }, function(error){
         console.log("Use real mobile app for getting exact data");
-        //dummy variables for browser use
-        env.user = {
-          name: "suvojit",
-          gender: "male",
-          picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg",
-          email: "suvojitraj.kar20@facebook.com"
-        };
+        env.user = dummy_user;                 //dummy data for browser use
         console.log(env.user);
-        env.getPreferences();
+        env.getPreferences(); 
       });
        setTimeout(() => {
       loadingPopup.dismiss();
@@ -88,34 +87,32 @@ export class HomePage {
 
   //get user preferences
   getPreferences(){
-     let env = this;
-    this.http.get('http://54.172.94.76:9000/api/v1/customers/preferences/' + this.user.email)
+    let env = this;
+    this.http.get(base_url+'api/v1/customers/preferences/' + this.user.email)
       .map(res => res.json())
       .subscribe(
         data => {
           console.log("ok - user is already registered")
-          env.userReady = true;
-          
-          // hard coded
-          // env.mylatitude = 37.40879;
-          // env.mylongitude = -121.98857;
-          //env.Fetchdashboard(env.data_start, env.data_limit);
-
-          //geolocation
-          this.geolocation.getCurrentPosition().then((resp) => {
-           console.log("ok");
-           env.mylatitude = resp.coords.latitude;
-           env.mylongitude = resp.coords.longitude;
-           console.log("lat"+env.mylatitude);
-           console.log("long"+env.mylongitude);
-           env.Fetchdashboard(env.data_start, env.data_limit);
-          }).catch((error) => {
-            console.log('Error getting location', error);
-            env.mylatitude = 37.40879;
-            env.mylongitude = -121.98857;
-            env.Fetchdashboard(env.data_start, env.data_limit);
-
-          });
+          if (geolocation != true){                        //hardcode
+              env.mylatitude = dummy_lat;
+              env.mylongitude = dummy_long;
+              env.Fetchdashboard(env.data_start, env.data_limit);
+          }
+         else{                                             //detect location
+                this.geolocation.getCurrentPosition().then((resp) => {
+                 console.log("ok");
+                 env.mylatitude = resp.coords.latitude;
+                 env.mylongitude = resp.coords.longitude;
+                 console.log("lat"+env.mylatitude);
+                 console.log("long"+env.mylongitude);
+                 env.Fetchdashboard(env.data_start, env.data_limit);
+                }).catch((error) => {
+                  console.log('Error getting location', error);
+                  env.mylatitude = dummy_lat;
+                  env.mylongitude = dummy_long;
+                  env.Fetchdashboard(env.data_start, env.data_limit);
+                });
+           }
         },
         err => {
           console.error(err)
@@ -136,20 +133,28 @@ export class HomePage {
     this.http.post(link, usrdetails)
       .subscribe(data => {
         console.log("User registration successfull.");
-         env.geolocation.getCurrentPosition().then((resp) => {
-           console.log("ok");
-           env.mylatitude = resp.coords.latitude;
-           env.mylongitude = resp.coords.longitude;
-           console.log("lat"+env.mylatitude);
-           console.log("long"+env.mylongitude);
-           env.Fetchdashboard(env.data_start, env.data_limit);
-          }).catch((error) => {
-            console.log('Error getting location', error);
-            env.mylatitude = 37.40879;
-            env.mylongitude = -121.98857;
-            env.Fetchdashboard(env.data_start, env.data_limit);
 
-          });
+
+         if (geolocation != true){               //hardcode
+              env.mylatitude = dummy_lat;
+              env.mylongitude = dummy_long;
+              env.Fetchdashboard(env.data_start, env.data_limit);
+         }
+         else{                                  // detect location
+             env.geolocation.getCurrentPosition().then((resp) => {
+             console.log("ok");
+             env.mylatitude = resp.coords.latitude;
+             env.mylongitude = resp.coords.longitude;
+             console.log("lat"+env.mylatitude);
+             console.log("long"+env.mylongitude);
+             env.Fetchdashboard(env.data_start, env.data_limit);
+            }).catch((error) => {
+              console.log('Error getting location', error);
+              env.mylatitude = dummy_lat;
+              env.mylongitude = dummy_long;
+              env.Fetchdashboard(env.data_start, env.data_limit);
+            });
+         }
         this.navCtrl.setRoot(PreferencePage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
       }, error => {
         console.log("Oooops! Error in registration");
