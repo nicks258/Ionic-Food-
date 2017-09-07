@@ -9,8 +9,20 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
-import 'rxjs/add/operator/timeout'
+import 'rxjs/add/operator/timeout';
 //import { LocationTracker } from '../../providers/location-tracker/location-tracker';
+
+
+
+
+declare function do_get();
+declare function do_post();
+declare var base_url;
+
+
+
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -34,6 +46,9 @@ export class HomePage {
   //, public locationTracker: LocationTracker
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
     //get user details from localstorage
+    console.log(base_url);
+    console.log(do_get());
+    console.log(do_post());
     this.userReady = true;
     let loadingPopup = this.loadingCtrl.create({
       content: 'Checking preferences...',

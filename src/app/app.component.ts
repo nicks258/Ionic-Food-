@@ -16,8 +16,10 @@ import { FavouritesPage}  from '../pages/favourites/favourites';
 import { VersionPage}  from '../pages/version/version';
 import { Events } from 'ionic-angular';
 //import {BackgroundGeolocation, BackgroundGeolocationConfig,BackgroundGeolocationResponse} from '@ionic-native/background-geolocation';
+
+
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   public lng: any;
