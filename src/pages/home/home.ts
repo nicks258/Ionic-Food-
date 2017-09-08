@@ -22,6 +22,7 @@ declare var geolocation;
 declare var dummy_user;
 declare var dummy_lat;
 declare var dummy_long;
+declare var FB_APP_ID;
 
 
 

@@ -7,23 +7,46 @@ import { App, AlertController  } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { GooglePlus } from '@ionic-native/google-plus';
 import { Events } from 'ionic-angular';
+
+
+//rootscope variables and functions
+declare function do_get();
+declare function do_post();
+declare function get_userdetails();
+declare var base_url;
+declare var geolocation;
+declare var dummy_user;
+declare var dummy_lat;
+declare var dummy_long;
+declare var FB_APP_ID;
+
+
+
+
+
+
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
+
+
+
+
 export class LoginPage {
   rootPage: any ;
   user: any;
   userReady: boolean = false;
-  FB_APP_ID: number = 125195224754920;
+
   constructor(public app: App,public http: Http,private alertCtrl: AlertController,public navCtrl: NavController,public fb: Facebook,public loadingCtrl: LoadingController, public nativeStorage: NativeStorage, public navParams: NavParams,
               public googlePlus: GooglePlus, public events: Events ) {
 
-    this.fb.browserInit(this.FB_APP_ID, "v2.8");
+    this.fb.browserInit(FB_APP_ID, "v2.8");
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    console.log('Login page Loaded');
   }
 
   doFbLogin(){
@@ -155,39 +178,15 @@ export class LoginPage {
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            env.alert();
-            //env.events.publish('user:created',Date.now());
-            //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            //env.alert();
+            env.events.publish('user:created',Date.now());
+            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             console.log(error);
          }, 1000);
 
       });
   }
-  ionViewCanEnter(){
-    // let env = this;
-    // this.nativeStorage.getItem('user')
-    //   .then(function (data){
-    //     env.user = {
-    //       name: data.name,
-    //       gender: data.gender,
-    //       picture: data.picture
-    //     };
 
-    //     env.userReady = true;
-    //     env.events.publish('user:created',Date.now());
-    //     console.log( env.userReady);
-    //   }, function(error){
-    //     console.log(error);
-    //   });
-  }
-
-
-
-
-  static getServerUserId()
-{
-  console.log("hello");
-}
 
 }
 
