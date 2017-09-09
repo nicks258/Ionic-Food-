@@ -10,29 +10,24 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/timeout';
+import { Events } from 'ionic-angular';
 
 
 
 //rootscope variables and functions
-declare function do_get();
-declare function do_post();
-declare function get_userdetails();
 declare var base_url;
 declare var geolocation;
 declare var dummy_user;
 declare var dummy_lat;
 declare var dummy_long;
 declare var FB_APP_ID;
-
-
-
+declare var dummy_userId;
 
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-
 
 
 export class HomePage {
@@ -50,174 +45,167 @@ export class HomePage {
   mylatitude : any;
   mylongitude : any;
   env1 : any;
+  user_details: any;
+  user_id : any;
+  shared_details : any
 
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http) {
-
-    //rootscope variables console
-    console.log(base_url);
-    console.log(do_get());
-    console.log(do_post());
-
-
-    //get user details from localstorage
-    this.userReady = true;
-    let loadingPopup = this.loadingCtrl.create({
-      content: 'Checking preferences...',
-      spinner: 'circles'
-    });
-    loadingPopup.present();
-
-    let env = this;
-    this.env1 = env;
-    this.nativeStorage.getItem('user')
-      .then( (data)=>{
-        // env.user = get_userdetails();          //user details
-        env.user = { name: data.name, gender: data.gender, picture: data.picture, email: data.email };
-        console.log(env.user);
-        env.getPreferences();
-      }, function(error){
-        console.log("Use real mobile app for getting exact data");
-        env.user = dummy_user;                 //dummy data for browser use
-        console.log(env.user);
-        env.getPreferences();
-      });
-       setTimeout(() => {
-      loadingPopup.dismiss();
-    },1100)
-  }
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http, public events: Events) {
+      
+      //user_details
+      this.user_details = this.get_user_details();
+      this.user_id = this.get_userid();
+      this.userReady = true;
 
 
-  //get user preferences
-  getPreferences(){
-    let env = this;
-    this.http.get(base_url+'api/v1/customers/preferences/' + this.user.email)
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          console.log("ok - user is already registered")
-          if (geolocation != true){                        //hardcode
-              env.mylatitude = dummy_lat;
-              env.mylongitude = dummy_long;
-              env.Fetchdashboard(env.data_start, env.data_limit);
-          }
-         else{                                             //detect location
-                this.geolocation.getCurrentPosition().then((resp) => {
-                 console.log("ok");
-                 env.mylatitude = resp.coords.latitude;
-                 env.mylongitude = resp.coords.longitude;
-                 console.log("lat"+env.mylatitude);
-                 console.log("long"+env.mylongitude);
-                 env.Fetchdashboard(env.data_start, env.data_limit);
-                }).catch((error) => {
-                  console.log('Error getting location', error);
-                  env.mylatitude = dummy_lat;
-                  env.mylongitude = dummy_long;
-                  env.Fetchdashboard(env.data_start, env.data_limit);
-                });
-           }
-        },
-        err => {
-          console.error(err)
-          console.log("ok - user is not yet registered")
-          this.registerUser();
+      //location
+      this.userLocation();
+
+     
+  } 
+   
+
+   //get user location
+   userLocation()
+        {    
+              let loadingPopup = this.loadingCtrl.create({
+              content: "Fetching Location...",
+              spinner: 'circles'
+              });
+              loadingPopup.present(); 
+
+             let env = this;
+
+             if (geolocation == true){
+                 this.geolocation.getCurrentPosition().then((resp) => {
+                         env.mylatitude = resp.coords.latitude;
+                         env.mylongitude = resp.coords.longitude;
+                         console.log(resp.coords.latitude + " " + resp.coords.longitude);
+                         setTimeout(() => {
+                         loadingPopup.dismiss();
+                         }, 1000);
+                         this.dashboarddetails(env.mylatitude,env.mylongitude);
+                        }).catch((error) => {
+                          console.log('Error getting location', error);
+                          env.mylatitude = dummy_lat;
+                          env.mylongitude = dummy_long;
+                          setTimeout(() => {
+                         loadingPopup.dismiss();
+                         }, 1000);
+                          this.dashboarddetails(env.mylatitude,env.mylongitude);
+                        });
+              }
+              else{
+                 env.mylatitude = dummy_lat;
+                 env.mylongitude = dummy_long;
+                 setTimeout(() => {
+                 loadingPopup.dismiss();
+                  }, 1000);
+                 this.dashboarddetails(env.mylatitude,env.mylongitude);
+              }
         }
-      );
+
+    //user details and preference
+    dashboarddetails(lat,long){ 
+         this.mylatitude = lat;
+         this.mylongitude = long;
+         console.log(this.mylatitude + " " +  this.mylongitude);
+         if (this.user_details.gender == undefined)
+             this.user_details.gender = "-";
+         this.shared_details = {"username": this.user_details.name ,"useremail" : this.user_details.email, "usergender" : this.user_details.gender, "userpicture" : this.user_details.picture, "userlatitude": this.mylatitude, "userlongitude" : this.mylongitude, "userid" : this.user_id.customerId};
+         console.log(this.shared_details);
+         this.events.publish("user_info" , this.shared_details);
+         this.getPreferences();    //from preference fetch dashboard
   }
 
 
-  //register user after 1st time installation
+
+    //get user details
+    get_user_details(){ 
+        console.log("Getting user details");
+        let userdetails, userdata;
+        userdata = this.nativeStorage.getItem('user');
+        if (userdata.name == undefined && userdata.gender == undefined && userdata.picture == undefined && userdata.email == undefined)
+             userdetails = dummy_user;
+        else 
+             userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
+        return userdetails;
+      }
+
+
+    //get userid
+    get_userid(){
+       console.log("Getting UserID");
+       let userID_storage, userID;
+        userID_storage = this.nativeStorage.getItem('USERID');
+        if (userID_storage.customerId == undefined)
+             userID = dummy_userId;
+        else 
+             userID = userID_storage.customerId;
+        return userID;
+    }
+
+   //get user preferences
+    getPreferences(){
+        let env = this;
+        this.http.get(base_url+'api/v1/customers/preferences/' + this.shared_details.useremail)
+          .map(res => res.json())
+          .subscribe(
+            data => {
+              console.log("user is already registered")
+              env.Fetchdashboard(env.data_start, env.data_limit);
+            },
+            err => {
+              console.error(err);
+              console.log("user is not yet registered"); 
+              this.registerUser();    // register user to get preference
+            }
+          );
+  }
+
+
+  //register user after first time app installation. This will be helpful for fetching preferences
   registerUser(){
-    let env = this;
     console.log("registering  user");
     let link = 'http://54.172.94.76:9000/api/v1/customers';
-    let usrdetails = {"firstName":this.env1.user.name,"email":this.env1.user.email};
-    console.log(usrdetails);
+    let usrdetails = {"firstName":this.shared_details.username,"email":this.shared_details.useremail};
     this.http.post(link, usrdetails)
       .subscribe(data => {
         console.log("User registration successfull.");
-
-
-         if (geolocation != true){               //hardcode
-              env.mylatitude = dummy_lat;
-              env.mylongitude = dummy_long;
-              env.Fetchdashboard(env.data_start, env.data_limit);
-         }
-         else{                                  // detect location
-             env.geolocation.getCurrentPosition().then((resp) => {
-             console.log("ok");
-             env.mylatitude = resp.coords.latitude;
-             env.mylongitude = resp.coords.longitude;
-             console.log("lat"+env.mylatitude);
-             console.log("long"+env.mylongitude);
-             env.Fetchdashboard(env.data_start, env.data_limit);
-            }).catch((error) => {
-              console.log('Error getting location', error);
-              env.mylatitude = dummy_lat;
-              env.mylongitude = dummy_long;
-              env.Fetchdashboard(env.data_start, env.data_limit);
-            });
-         }
         this.navCtrl.setRoot(PreferencePage, {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
       }, error => {
         console.log("Oooops! Error in registration");
       });
   }
 
-    //fetch dashboard elements - 6 at a time
+  //fetch dashboard elements - 6 at a time
   Fetchdashboard(start, end){
-    let enc = this;
-    console.log(this.user.email);
     let loadingPopup = this.loadingCtrl.create({
-      content: 'Loading Restaurants...',
-      spinner: 'circles'
-    });
-    loadingPopup.present();
-    console.log("Fetching dashboard");
+              content: "Loading Restaurants...",
+              spinner: 'circles'
+              });
+              loadingPopup.present(); 
 
-    this.nativeStorage.getItem('USERID')
-      .then( (data)=>{
-        enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/dashboard?email='+enc.user.email+'&lat='+enc.mylatitude+'&lng='+enc.mylongitude+'&pn='+start+'&ps='+end)
+    console.log("Fetching Dashboard");
+    this.http.get('http://54.172.94.76:9000/api/v1/customers/'+this.shared_details.userid+'/dashboard?email='+this.shared_details.useremail+'&lat='+this.shared_details.userlatitude+'&lng='+this.shared_details.userlongitude+'&pn='+start+'&ps='+end)
        .map(res => res.json())
       .subscribe(
         data => {
-          console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/dashboard?email='+this.user.email+'&lat='+this.mylatitude+'&lng='+this.mylongitude+'&pn='+start+'&ps='+end);
-          setTimeout(() => {
-          enc.dashboardlist = data.data;
-          if(start == 1 && enc.dashboardlist.length == 0)
-               enc.presentalert(enc.mylatitude, enc.mylongitude);
-          enc.nextlength = data.data.length;
+          console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+this.shared_details.userid+'/dashboard?email='+this.shared_details.useremail+'&lat='+this.shared_details.userlatitude+'&lng='+this.shared_details.userlongitude+'&pn='+start+'&ps='+end);
+          this.dashboardlist = data.data;
+          if(start == 1 && this.dashboardlist.length == 0)
+               this.presentalert(this.shared_details.userlatitude, this.shared_details.userlongitude);
+          this.nextlength = data.data.length;
           loadingPopup.dismiss();
-         }, 1000);
         },
         err => console.error(err)
       );
-      }, function(error){
-        console.log("Use real mobile app for getting exact data");
-        //dummy data
-        enc.id = 15;
-        enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+enc.id+'/dashboard?email='+enc.user.email+'&lat='+enc.mylatitude+'&lng='+enc.mylongitude+'&pn='+start+'&ps='+end)
-       .map(res => res.json())
-      .subscribe(
-        data => {
-          console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+enc.id+'/dashboard?email='+enc.user.email+'&lat='+enc.mylatitude+'&lng='+enc.mylongitude+'&pn='+start+'&ps='+end);
-          setTimeout(() => {
-          enc.dashboardlist = data.data;
-          if(start == 1 && enc.dashboardlist.length == 0)
-               enc.presentalert(enc.mylatitude, enc.mylongitude);
-          enc.nextlength = data.data.length;
-          loadingPopup.dismiss();
-         }, 1000);
-        },
-        err => console.error(err)
-      );
-      });
+}
 
-  }
 
  presentalert(lat, long) {
    let alert = this.alertCtrl.create({
-      title: 'Restaurants',
-      subTitle: "No Restaurants Found at : lat="+lat+"long"+long,
+      title: 'Restaurant Details',
+      subTitle: "Sorry, but we could not find any restaurant at your location : latitude => "+lat+" and longitude => "+long,
       buttons: ['OK']
     });
     alert.present();
@@ -232,7 +220,7 @@ export class HomePage {
 
   //move from homepage to searchpage
   goto_searchpage(limit){
-    this.navCtrl.setRoot(SearchPage , {}, {animate:true,animation:'transition',duration:300,direction:'forward'});
+    this.navCtrl.setRoot(SearchPage , {data: this.shared_details}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //move from homepage to cartpage
@@ -243,7 +231,7 @@ export class HomePage {
   //move from homepage to detailpage
   goto_detailview(data){
     this.data_stringify = JSON.stringify(data);
-    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, latitude : this.mylatitude , longitude : this.mylongitude}, {animate:true,animation:'transition',duration:300,direction:'forward'});
+    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, latitude : this.shared_details.userlatitude , longitude : this.shared_details.userlongitude}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //pagination

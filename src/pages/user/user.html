@@ -10,22 +10,22 @@
 <!--head navbar ends-->
 
 <!-- body content-->
-<ion-content padding *ngIf='userReady'>
+<ion-content padding>
     <br><br>
     <ion-list>
     <ion-item>
     <ion-avatar class="profimg1">
-      <img [src]="user.picture" style="margin-left:20%;height:200px;width:200px;margin-top:12%">
+      <img [src]="shareddata.userpicture" style="margin-left:20%;height:200px;width:200px;margin-top:12%">
     </ion-avatar>
   </ion-item>
   </ion-list>
 
   <ion-list>
-    <button></button>
-    <button ion-item>Full Name :    {{user.name}} </button>
-    <button ion-item>Gender :  {{user.gender}} </button>
-    <button ion-item>Mail :  {{user.email}} </button>
-    <button></button>
+
+    <button ion-item>Full Name :    {{shareddata.username}} </button>
+    <button ion-item>Gender :  {{shareddata.usergender}} </button>
+    <button ion-item>Mail :  {{shareddata.useremail}} </button>
+
   </ion-list>
 
 

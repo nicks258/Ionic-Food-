@@ -18,8 +18,10 @@ export class SearchPage {
          default : any;
          flag : number = 1;
          sresults : any = 0;
-
+         shareddata : any;
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,public navParams: NavParams, public http: Http) {
+      this.shareddata = navParams.get('data');
+      console.log(this.shareddata);
   	  this.initial_search(); //search template
   }
 

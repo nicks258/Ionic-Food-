@@ -31,6 +31,7 @@ export class MyApp {
   userReady: boolean = false;
   pages: Array<{title: string, component: any, icon: any}>;
   public watch: any;
+  shared_data : any;
   //private geolocation: Geolocation,public zone: NgZone,private backgroundGeolocation: BackgroundGeolocation
   constructor(public events: Events,public platform: Platform,public nativeStorage: NativeStorage,public googlePlus: GooglePlus, public statusBar: StatusBar, public splashScreen: SplashScreen)
   {
@@ -99,6 +100,13 @@ export class MyApp {
     console.log(env.userReady);
   });
 
+    events.subscribe('user_info', shared_details => {
+      console.log(shared_details);
+      this.shared_data = shared_details;
+    })
+
+
+
 
     this.pages = [
       { title: 'Home', component: HomePage, icon:'home' },
@@ -144,7 +152,7 @@ export class MyApp {
 
   openPage(page) {
 
-    this.nav.setRoot(page.component,{},{animate:true,animation:'transition',duration:300,direction:'forward'});
+    this.nav.setRoot(page.component,{data:this.shared_data},{animate:true,animation:'transition',duration:300,direction:'forward'});
   }
   logout() {
     let env = this;

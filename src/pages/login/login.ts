@@ -45,9 +45,7 @@ export class LoginPage {
     this.fb.browserInit(FB_APP_ID, "v2.8");
   }
 
-  ionViewDidLoad() {
-    console.log('Login page Loaded');
-  }
+
 
   doFbLogin(){
     let loading = this.loadingCtrl.create({
