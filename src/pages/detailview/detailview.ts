@@ -56,6 +56,7 @@ export class DetailviewPage {
         favourities : any;
         data: Array<{title: string, details: string, icon: string, bgcolor: string, showDetails: boolean, value: number}> = [];
         userid : any;
+        params : any;
 
   constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public alertCtrl: AlertController,public platform: Platform, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public geolocation: Geolocation,public http: Http) {
       this.sdata = navParams.get('data_search');
@@ -68,6 +69,7 @@ export class DetailviewPage {
       this.mylatitude = navParams.get('data').userlatitude;
       this.mylongitude = navParams.get('data').userlongitude;
       this.userid = navParams.get('data').userid;
+      this.params = navParams.get('data');
 
       //customization for 4 tabs/option menu
       this.data.push({
@@ -149,7 +151,7 @@ export class DetailviewPage {
       }
       else
       {
-          this.navCtrl.push(DetailmodalPage, {value: value, details : this.sdata, current_detail : "ok"},{animate:true,animation:'transition',duration:300,direction:'forward'});
+          this.navCtrl.push(DetailmodalPage, {value: value, details : this.sdata, current_detail : "ok", data : this.params},{animate:true,animation:'transition',duration:300,direction:'forward'});
       }
   }
 
@@ -284,7 +286,6 @@ restaurantandinfo(value, category){
     });
     loadingPopup.present();
        let id = this.sdata.item.restaurant_id;
-       console.log(id);
        this.http.get('http://54.172.94.76:9000/api/v1/restaurants/'+id)
       .map(res => res.json())
       .subscribe(
@@ -294,11 +295,11 @@ restaurantandinfo(value, category){
             this.restaurantInfo = data.data.restaurant;
             this.menu =  data.data.menu;
             this.nextlength = data.data.restaurant.length;
-            console.log(this.info);
             this.navCtrl.push(DetailmodalPage, {
             value: value,
             details : this.sdata,
-            current_detail : this.info
+            current_detail : this.info,
+            data : this.params
             },{animate:true,animation:'transition',duration:300,direction:'forward'});
 
             loadingPopup.dismiss();
@@ -316,18 +317,17 @@ restaurantandinfo(value, category){
     });
     loadingPopup.present();
     let id = this.sdata.item.restaurant_id;
-    console.log(id);
     this.http.get('http://54.172.94.76:9000/api/v1/restaurant_reviews/'+id)
       .map(res => res.json())
       .subscribe(
         data => {
           setTimeout(() => {
             this.review = data.data;
-            console.log(this.review);
             this.navCtrl.push(DetailmodalPage, {
               value: value,
               details : this.sdata,
-              current_detail : this.review
+              current_detail : this.review,
+              data : this.params
             },{animate:true,animation:'transition',duration:300,direction:'forward'});
             loadingPopup.dismiss();
           }, 1000);
@@ -352,11 +352,11 @@ mealdetail(value, category){
             this.restaurantInfo = data.data.restaurant;
             this.menu =  data.data.menu;
             this.nextlength = data.data.restaurant.length;
-            console.log(this.restaurantInfo);
             this.navCtrl.push(DetailmodalPage, {
             value: value,
             details : this.sdata,
-            current_detail : this.sdata.item
+            current_detail : this.sdata.item,
+            data : this.params
             },{animate:true,animation:'transition',duration:300,direction:'forward'});
             loadingPopup.dismiss();
         },

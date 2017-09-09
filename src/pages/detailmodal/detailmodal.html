@@ -141,6 +141,7 @@
              <ion-list style="background-color: #B9F496">
                 <button ion-item *ngFor="let menu_items of info.menu;let i =index" style="background-color: #B9F496" (click)="goto_detailview(info.menu[i])">
                   {{info.menu[i].item.name}}
+                  <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" style="float:right"></ion-icon>
                 </button>
               </ion-list>
     </div>

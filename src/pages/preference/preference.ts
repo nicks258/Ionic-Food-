@@ -359,8 +359,6 @@ export class PreferencePage {
            loadingPopup.dismiss();
          }, 1000);
 
-            //console.log(this.selectedItems);
-            console.log(JSON.stringify(this.savedpreferences));
 },
 err => {
   loadingPopup.dismiss(); 

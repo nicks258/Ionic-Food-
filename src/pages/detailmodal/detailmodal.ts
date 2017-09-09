@@ -39,14 +39,16 @@ export class DetailmodalPage {
   fats:any;
   vitamins:any;
   servings:any;
+  params : any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,public loadingCtrl: LoadingController,public http: Http) {
      this.value = navParams.get("value");
      this.details = navParams.get("details");
      this.info = navParams.get("current_detail");
-     console.log(this.info);
      this.len = this.info.length;
-     this.mylatitude = 37.40879;
-     this.mylongitude = -121.98857;
+     this.params = navParams.get("data");
+     console.log(this.params);
+     this.mylatitude = this.params.userlatitude;
+     this.mylongitude = this.params.userlongitude
      this.data.push({
           value: this.value
         })
@@ -86,13 +88,11 @@ export class DetailmodalPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailmodalPage');
     document.getElementById("ioncontent").style.backgroundColor = this.bgcol ;
     this.setBackButtonAction()
   }
   
   setBackButtonAction(){
-       console.log("back button pressed");
        this.navBar.backButtonClick = () => {
           this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
@@ -112,7 +112,6 @@ export class DetailmodalPage {
 
   goto_detailview(data){
     this.data_stringify = JSON.stringify(data);
-    console.log(this.data_stringify);
     this.navCtrl.push(MenuinfodetailsPage,{data_search : data},{animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 }

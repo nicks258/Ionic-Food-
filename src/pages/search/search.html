@@ -22,12 +22,10 @@
     <b>Search Results <span style="float:right">{{sresults}} results</span></b>
   </ion-card-header>
   <ion-list>
-    <hr>
-    <button ion-item *ngFor="let item of items" (click)='goto_item(item)'>
-      <div style="color: grey"> <ion-icon name="search" style="padding-right:14px"></ion-icon> {{item.item.name}} </div>
+   <div *ngFor="let item of items;" (click)='goto_item(item)'>
+      <div style="color: grey"> <ion-icon name="search" style="padding:6px 16px 7px 14px;"></ion-icon> {{item.item.name}} </div>
       <hr>
-    </button>
-     <hr style="color:black">
+  </div>
   </ion-list>
 </ion-card>
 <!-- show user typedsearch result ends-->
@@ -39,14 +37,10 @@
   <ion-card-header>
     <b>Explore Nearby</b>
   </ion-card-header>
-
-  <ion-list>
-    <hr>
-    <button ion-item *ngFor="let item of item;" (click)='goto_fetchsearch(item)'>
-      <div style="color: grey"> {{item}} </div>
+  <div *ngFor="let item of item;" (click)='goto_fetchsearch(item)'>
+      <div style="color: grey"> <ion-icon name="search" style="padding:6px 16px 7px 14px;"></ion-icon> {{item}} </div>
       <hr>
-    </button>
-  </ion-list>
+  </div>
 </ion-card>
 <!-- default template ends-->
 </ion-content>

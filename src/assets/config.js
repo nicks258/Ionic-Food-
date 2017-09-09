@@ -21,7 +21,7 @@ var browser_mode = true;
     "userid":15
   } */
 
-  
+
 function do_get(){
 	return "get function working";
 }
