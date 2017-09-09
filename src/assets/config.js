@@ -1,3 +1,6 @@
+
+//All Constants and Configuration Variables
+
 var base_url= "http://54.172.94.76:9000/";
 var geolocation = false;
 var dummy_lat = 37.40879;

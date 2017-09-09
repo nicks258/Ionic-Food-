@@ -10,6 +10,8 @@ import { AlertController } from 'ionic-angular';
 import {NativeStorage} from "@ionic-native/native-storage";
 import { Navbar } from 'ionic-angular';
 
+declare var base_url;
+
 @IonicPage()
 @Component({
   selector: 'page-detailview',
@@ -20,6 +22,8 @@ import { Navbar } from 'ionic-angular';
 
 export class DetailviewPage {
   @ViewChild(Navbar) navBar: Navbar;
+
+
   menu: any;
   public sdata : any;
         name : any;
@@ -102,7 +106,7 @@ export class DetailviewPage {
   }, 1200);
 
   }
-  
+
 
   //favourites
   getFavourites()
@@ -209,12 +213,12 @@ addfav(){
       spinner: 'circles'
     });
     loadingPopup.present();
-    console.log("Aadding to fav");
+    console.log("Adding to fav");
     loadingPopup.dismiss();
 
      enc.nativeStorage.getItem('USERID')
     .then( (data)=> {
-      let link = 'http://54.172.94.76:9000/api/v1/customers/'+data.customerId+'/favourites/menus/' + enc.itemId;
+      let link =  base_url +'api/v1/customers/'+data.customerId+'/favourites/menus/' + enc.itemId;
       let data1 = {};
       console.log("post data : " + JSON.stringify(data1));
       console.log("post url : " + link);
@@ -241,6 +245,48 @@ addfav(){
         });
     });
 }
+
+  //Add to Cart
+  addCart(){
+    let enc = this;
+
+    let loadingPopup = this.loadingCtrl.create({
+      content: 'Adding to your cart...',
+      spinner: 'circles'
+    });
+    loadingPopup.present();
+    console.log("Aadding to fav");
+    loadingPopup.dismiss();
+
+    enc.nativeStorage.getItem('USERID')
+      .then( (data)=> {
+        let link = base_url +'api/v1/customers/'+data.customerId+'/cart/menus/' + enc.itemId;
+        let data1 = {};
+        console.log("post data : " + JSON.stringify(data1));
+        console.log("post url : " + link);
+        enc.http.post(link, data1)
+          .subscribe(data => {
+            console.log("Ok" + data1);
+            enc.confirm();
+          }, error => {
+            console.log("Oooops!");
+          });
+      }, function(error) {
+        console.log("Use real mobile app for getting exact data");
+        //dummy variables for browser use
+        let link = 'http://54.172.94.76:9000/api/v1/customers/'+15+'/cart/menus/' + enc.itemId;
+        let data1 = {};
+        console.log("post data : " + JSON.stringify(data1));
+        console.log("post url : " + link);
+        enc.http.post(link, data1)
+          .subscribe(data => {
+            console.log("Ok" + data1);
+            enc.confirm();
+          }, error => {
+            console.log("Oooops!");
+          });
+      });
+  }
 
 //share function
 presentActionSheet(message) {
