@@ -22,6 +22,7 @@ declare var dummy_lat;
 declare var dummy_long;
 declare var FB_APP_ID;
 declare var dummy_userId;
+declare var browser_mode;
 
 
 @Component({
@@ -112,7 +113,7 @@ export class HomePage {
          if (this.user_details.gender == undefined)
              this.user_details.gender = "-";
          this.shared_details = {"username": this.user_details.name ,"useremail" : this.user_details.email, "usergender" : this.user_details.gender, "userpicture" : this.user_details.picture, "userlatitude": this.mylatitude, "userlongitude" : this.mylongitude, "userid" : this.user_id.customerId};
-         console.log(this.shared_details);
+         console.log(JSON.stringify(this.shared_details));
          this.events.publish("user_info" , this.shared_details);
          this.getPreferences();    //from preference fetch dashboard
   }
@@ -231,7 +232,7 @@ export class HomePage {
   //move from homepage to detailpage
   goto_detailview(data){
     this.data_stringify = JSON.stringify(data);
-    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, latitude : this.shared_details.userlatitude , longitude : this.shared_details.userlongitude}, {animate:true,animation:'transition',duration:300,direction:'forward'});
+    this.navCtrl.push(DetailviewPage,{data_search : this.data_stringify, data:this.shared_details}, {animate:true,animation:'transition',duration:300,direction:'forward'});
   }
 
   //pagination

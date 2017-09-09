@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, Platform} from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, Platform} from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { DetailmodalPage } from '../detailmodal/detailmodal';
@@ -10,15 +10,22 @@ import { AlertController } from 'ionic-angular';
 import {NativeStorage} from "@ionic-native/native-storage";
 import { Navbar } from 'ionic-angular';
 
-declare var base_url;
 
-@IonicPage()
+//rootscope variables and functions
+declare var base_url;
+declare var geolocation;
+declare var dummy_user;
+declare var dummy_lat;
+declare var dummy_long;
+declare var FB_APP_ID;
+declare var dummy_userId;
+declare var browser_mode;
+
+
 @Component({
   selector: 'page-detailview',
   templateUrl: 'detailview.html',
 })
-
-
 
 export class DetailviewPage {
   @ViewChild(Navbar) navBar: Navbar;
@@ -47,23 +54,22 @@ export class DetailviewPage {
         url :any;
         favourite:boolean = false;
         favourities : any;
-  data: Array<{title: string, details: string, icon: string, bgcolor: string, showDetails: boolean, value: number}> = [];
+        data: Array<{title: string, details: string, icon: string, bgcolor: string, showDetails: boolean, value: number}> = [];
+        userid : any;
+
   constructor(public navCtrl: NavController,public nativeStorage: NativeStorage, public alertCtrl: AlertController,public platform: Platform, public actionSheetCtrl: ActionSheetController, public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public geolocation: Geolocation,public http: Http) {
       this.sdata = navParams.get('data_search');
-      console.log(this.sdata);
       this.sdata = JSON.parse(this.sdata);
       this.name = this.sdata.item.name;
       this.rname = this.sdata.restaurant.name;
       this.lat = this.sdata.lat_long[1];
       this.long = this.sdata.lat_long[0];
       this.itemId = this.sdata.item.id;
-      this.mylatitude = navParams.get('latitude');
-      this.mylongitude = navParams.get('longitude');
-      // if (this.sdata.choices[0].min_price)
-      //     this.cost = this.sdata.choices[0].min_price;
-      // else
-      //     this.cost = "NA";
+      this.mylatitude = navParams.get('data').userlatitude;
+      this.mylongitude = navParams.get('data').userlongitude;
+      this.userid = navParams.get('data').userid;
 
+      //customization for 4 tabs/option menu
       this.data.push({
           title: 'Meal details and info',
           details: 'DetailmodalPage',
@@ -99,7 +105,6 @@ export class DetailviewPage {
       spinner: 'circles'
     });
     loadingPopup.present();
-
       this.getFavourites();
     setTimeout(() => {
     loadingPopup.dismiss();
@@ -111,47 +116,21 @@ export class DetailviewPage {
   //favourites
   getFavourites()
   {
-    let enc = this;
-    this.nativeStorage.getItem('USERID')
-      .then( (data)=>{
-
-    enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+data.customerId +'/favourites')
+    this.http.get('http://54.172.94.76:9000/api/v1/customers/'+ this.userid +'/favourites')
       .map(res => res.json())
       .subscribe(
         data => {
           setTimeout(() => {
-            enc.favourities = data.data;
-            for(let i=0;i< enc.favourities.length;i++)
+            this.favourities = data.data;
+            for(let i=0;i< this.favourities.length;i++)
             {
-               if (enc.favourities[i].item.name == enc.name)
-                   enc.favourite = true;
+               if (this.favourities[i].item.name == this.name)
+                   this.favourite = true;
             }
-            console.log(JSON.stringify(enc.favourities));
           }, 1000);
         },
         err => console.error(err)
       );
-  }, function(error){
-  console.log("Use real mobile app for getting exact data");
-  //dummy variables for browser use
-   enc.http.get('http://54.172.94.76:9000/api/v1/customers/'+15+'/favourites')
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          setTimeout(() => {
-            enc.favourities = data.data;
-             for(let i=0;i< enc.favourities.length;i++)
-            {
-               if (enc.favourities[i].item.name == enc.name)
-                   enc.favourite = true;
-            }
-            console.log(JSON.stringify(enc.favourities));
-          }, 1000);
-        },
-        err => console.error(err)
-      );
-});
-
   }
 
 
@@ -170,25 +149,17 @@ export class DetailviewPage {
       }
       else
       {
-          this.navCtrl.push(DetailmodalPage, {
-            value: value,
-            details : this.sdata,
-            current_detail : "ok"
-            },{animate:true,animation:'transition',duration:300,direction:'forward'});
+          this.navCtrl.push(DetailmodalPage, {value: value, details : this.sdata, current_detail : "ok"},{animate:true,animation:'transition',duration:300,direction:'forward'});
       }
-      console.log(value);
-
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailviewPage');
      this.setBackButtonAction()
   }
+
 //back button action
 setBackButtonAction(){
-       console.log("back button pressed");
        this.navBar.backButtonClick = () => {
-          console.log("Back button clicked");
           this.navCtrl.pop({animate:true,animation:'transition',duration:300,direction:'back'});
        }
     }
@@ -206,45 +177,27 @@ alreadyaddfav(){
 
 //add to favourite
 addfav(){
-  let enc = this;
-
   let loadingPopup = this.loadingCtrl.create({
       content: 'Aadding to Favourites...',
       spinner: 'circles'
     });
     loadingPopup.present();
-    console.log("Adding to fav");
-    loadingPopup.dismiss();
 
-     enc.nativeStorage.getItem('USERID')
-    .then( (data)=> {
-      let link =  base_url +'api/v1/customers/'+data.customerId+'/favourites/menus/' + enc.itemId;
+    console.log("Adding to fav");
+      let link =  base_url +'api/v1/customers/'+ this.userid +'/favourites/menus/' + this.itemId;
       let data1 = {};
-      console.log("post data : " + JSON.stringify(data1));
-      console.log("post url : " + link);
-      enc.http.post(link, data1)
+      this.http.post(link, data1)
         .subscribe(data => {
-          console.log("Ok" + data1);
-          enc.confirm();
+          loadingPopup.dismiss();
+          this.confirm();
         }, error => {
+          loadingPopup.dismiss();
           console.log("Oooops!");
         });
-    }, function(error) {
-      console.log("Use real mobile app for getting exact data");
-      //dummy variables for browser use
-      let link = 'http://54.172.94.76:9000/api/v1/customers/'+15+'/favourites/menus/' + enc.itemId;
-      let data1 = {};
-      console.log("post data : " + JSON.stringify(data1));
-      console.log("post url : " + link);
-      enc.http.post(link, data1)
-        .subscribe(data => {
-          console.log("Ok" + data1);
-          enc.confirm();
-        }, error => {
-          console.log("Oooops!");
-        });
-    });
-}
+
+    }
+
+
 
   //Add to Cart
   addCart(){

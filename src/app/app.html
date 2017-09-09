@@ -3,36 +3,18 @@
     <ion-toolbar>
       <ion-row>
               <ion-col col-4>
-                   <div *ngIf='userReady'><img [src]="user.picture" style="width:100%;"></div>
+                   <div *ngIf='userReady'><img [src]="user.picture" style="width:100vw; height:12vh;"></div>
                    </ion-col>
               <ion-col col-8>
                   <div *ngIf='userReady' style="margin-top:5px;margin-left:16px"><h3>{{user.name}}</h3></div>
-                  <p style="margin-left: 16px">OOTA</p>
+                  <p style="margin-left: 16px;margin-top:-4px">OOTA</p>
               </ion-col>
           </ion-row>
-     <!-- <div *ngIf='userReady'>
-      <img [src]="user.picture" style="width:100%">
-    </div>
-    <div *ngIf='!userReady'>
-      <img src="assets/img/user.png" style="width:100%">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTycewbr9Y9lN7Qn1Yl5e9CHBbleZpUMjqD23wcfOp5FKbhNMeUSg" style="width:100%">
-    </div> -->
     </ion-toolbar>
   </ion-header>
   <ion-content >
 
     <ion-list>
-      <!-- <button menuClose ion-item>
-          <ion-row>
-              <ion-col col-3>
-                  <img src="assets/img/user.png" style="width:100%;">
-              </ion-col>
-              <ion-col col-9>
-                  <div *ngIf='userReady' style="margin-top:21px;margin-left:16px">{{user.name}}</div>
-                  <div *ngIf='!userReady' style="margin-top:21px;margin-left:16px"> Suvojit Kar </div>
-              </ion-col>
-          </ion-row>
-      </button> -->
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}" style="padding-right: 10%"></ion-icon> {{p.title}}
         <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" style="float:right"></ion-icon>

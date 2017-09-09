@@ -10,19 +10,14 @@ import { Events } from 'ionic-angular';
 
 
 //rootscope variables and functions
-declare function do_get();
-declare function do_post();
-declare function get_userdetails();
 declare var base_url;
 declare var geolocation;
 declare var dummy_user;
 declare var dummy_lat;
 declare var dummy_long;
 declare var FB_APP_ID;
-
-
-
-
+declare var dummy_userId;
+declare var browser_mode;
 
 
 
@@ -45,8 +40,37 @@ export class LoginPage {
     this.fb.browserInit(FB_APP_ID, "v2.8");
   }
 
+  // fetch userid
+  getUserId(user: any) {
+    this.http.get('http://54.172.94.76:9000/api/v1/customers/'+user.email)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data.data.id));
+          this.nativeStorage.setItem('USERID',
+            {
+              customerId: data.data.id
+            }
+          )
+          setTimeout(() => {
+          }, 1000);
+        },
+        err => {
+           console.error(err)
+         });
+  }
+  
+  // login error alert
+   alert(){
+      let alert = this.alertCtrl.create({
+      title: 'Login',
+      subTitle: '.Please Login with real device.',
+      buttons: ['OK']
+    });
+    alert.present();
+   }
 
-
+  // facebook login
   doFbLogin(){
     let loading = this.loadingCtrl.create({
       content: 'Logging In...',
@@ -87,7 +111,6 @@ export class LoginPage {
               }, function (error) {
                 console.log("Use real mobile device to get facebook details");
                 env.getUserId(user);  //get UserId
-                //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 env.alert();
                 setTimeout(() => {
                 loading.dismiss();
@@ -96,50 +119,24 @@ export class LoginPage {
           })
       }, function(error){
         setTimeout(() => {
-                console.log("Error");
                 loading.dismiss();
+                 if (browser_mode == true){
+                env.events.publish('user:created',Date.now());
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            }
+            else{
                 env.alert();
-                //env.events.publish('user:created',Date.now());
-                //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 console.log(error);
-                }, 1000);
+            }
+          }, 1000);
       });
 
   }
 
-   getUserId(user: any) {
-    this.http.get('http://54.172.94.76:9000/api/v1/customers/'+user.email)
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          console.log(JSON.stringify(data.data.id));
-          this.nativeStorage.setItem('USERID',
-            {
-              customerId: data.data.id
-            }
-          )
-          setTimeout(() => {
-          }, 1000);
-        },
-        err => {
-           console.error(err)
-         });
-  }
 
-
-   alert(){
-      let alert = this.alertCtrl.create({
-      title: 'Login',
-      subTitle: 'Error in Login',
-      buttons: ['OK']
-    });
-    alert.present();
-   }
-
+  //google login
   doGoogleLogin(){
     let env = this;
-    let email1 : any;
-    let name1 : any;
     let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Logging In...',
@@ -170,22 +167,23 @@ export class LoginPage {
             loading.dismiss();
              setTimeout(() => {
               env.alert();
-              //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
               console.log(error);
              }, 1000);
           })
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            env.alert();
-            //env.events.publish('user:created',Date.now());
-            //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
-            console.log(error);
+            if (browser_mode == true){
+                env.events.publish('user:created',Date.now());
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            }
+            else{
+                env.alert();
+                console.log(error);
+            }
          }, 1000);
 
       });
   }
-
-
 }
 
