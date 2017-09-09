@@ -99,6 +99,7 @@ export class LoginPage {
                 console.log("Error");
                 loading.dismiss();
                 env.alert();
+                //env.events.publish('user:created',Date.now());
                 //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
                 console.log(error);
                 }, 1000);
@@ -176,9 +177,9 @@ export class LoginPage {
       }, function (error) {
          loading.dismiss();
         setTimeout(() => {
-            //env.alert();
-            env.events.publish('user:created',Date.now());
-            nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            env.alert();
+            //env.events.publish('user:created',Date.now());
+            //nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             console.log(error);
          }, 1000);
 
