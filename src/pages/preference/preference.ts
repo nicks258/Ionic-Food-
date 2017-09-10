@@ -438,7 +438,7 @@ err => {
 
  presentAlert(options) {
    let alert = this.alertCtrl.create({
-      title: 'items',
+      title: 'preference',
       subTitle: options,
       buttons: ['OK']
     });
@@ -494,7 +494,7 @@ err => {
          }
       }
     //this.presentAlert(JSON.stringify(this.applyjson));
-    this.presentAlert("Your prefernces are saved successfully");
+    this.presentAlert("Your prefernces are saved successfully !");
     let link = 'http://54.172.94.76:9000/api/v1/customers/preferences';
     let data =  {"email": this.env1.user.email ,"preferences":JSON.stringify(this.applyjson)};
     console.log("post data : " + JSON.stringify(data));

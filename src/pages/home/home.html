@@ -27,6 +27,10 @@
 
 <!--body content starts-->
 <ion-content class="body-content">
+    <div Style="margin-top:60%;text-align:center" *ngIf="nodata == true"> Sorry, No Restaurant found at your location </div>
+     <p style="color:blue;text-align:center" *ngIf="nodata == true" (click)=
+     "retry()"> RETRY </p>
+
    <div *ngFor="let dashboard of dashboardlist">
       <!--dashboard card starts-->
       <ion-card class="top_dist" style="height: 27.6vh">

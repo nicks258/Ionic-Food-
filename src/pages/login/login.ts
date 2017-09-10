@@ -52,8 +52,6 @@ export class LoginPage {
               customerId: data.data.id
             }
           )
-          setTimeout(() => {
-          }, 1000);
         },
         err => {
            console.error(err)
@@ -118,16 +116,16 @@ export class LoginPage {
               })
           })
       }, function(error){
-        setTimeout(() => {
-                loading.dismiss();
-                 if (browser_mode == true){
+         if (browser_mode == true){
                 env.events.publish('user:created',Date.now());
                 nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             }
             else{
                 env.alert();
                 console.log(error);
-            }
+          }
+        setTimeout(() => {
+                loading.dismiss();
           }, 1000);
       });
 
@@ -171,9 +169,7 @@ export class LoginPage {
              }, 1000);
           })
       }, function (error) {
-         loading.dismiss();
-        setTimeout(() => {
-            if (browser_mode == true){
+        if (browser_mode == true){
                 env.events.publish('user:created',Date.now());
                 nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             }
@@ -181,6 +177,8 @@ export class LoginPage {
                 env.alert();
                 console.log(error);
             }
+        setTimeout(() => {
+           loading.dismiss();
          }, 1000);
 
       });

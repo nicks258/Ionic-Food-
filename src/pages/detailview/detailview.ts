@@ -246,24 +246,31 @@ addfav(){
 //share function
 presentActionSheet(message) {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Share',
+      title: 'Share Restaurant Details',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
           text: 'Whatsapp',
           icon: !this.platform.is('ios') ? 'logo-whatsapp' : null,
           handler: () => {
-            console.log(message);
-            window.location.href="whatsapp://send?text=Restaurant : " + message;
             console.log('Whatsapp clicked');
+            window.location.href="whatsapp://send?text=Restaurant : " + message;
           }
         },
         {
           text: 'Messenger',
           icon: !this.platform.is('ios') ? 'logo-facebook' : null,
           handler: () => {
-            window.location.href="fb-messenger://share/?link=Restaurant : " + message;
             console.log('Facebook clicked');
+            window.location.href="fb-messenger://share/?link=Restaurant : " + message;
+          }
+        },
+        {
+          text: 'SMS',
+          icon: !this.platform.is('ios') ? 'text' : null,
+          handler: () => {
+            console.log('sms clicked');
+            window.location.href="sms:?&body=Restaurant : " + message;
           }
         }
       ]

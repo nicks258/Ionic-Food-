@@ -71,15 +71,20 @@ export class MyApp {
       { title: 'Whats new', component: VersionPage, icon: 'list-box' }
     ];
 
+
       this.nativeStorage.getItem('user')
         .then( function (data) {
         env.user = { name: data.name, gender: data.gender, picture: data.picture };
             env.userReady = true;
-            env.nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300,direction: 'forward'});//->
-            env.splashScreen.hide();
+            env.nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300,direction: 'forward'});
+            setTimeout(() => {
+             env.splashScreen.hide();
+          }, 1000);
         }, function (error) {
-            env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,  direction: 'forward'});//->
-            env.splashScreen.hide();
+            env.nav.setRoot(LoginPage, {}, {animate: true, animation:'transition',duration:300,  direction: 'forward'});
+            setTimeout(() => {
+             env.splashScreen.hide();
+          }, 1000);
         });
       this.statusBar.styleDefault();
     });

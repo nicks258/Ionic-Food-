@@ -49,6 +49,7 @@ export class HomePage {
   user_details: any;
   user_id : any;
   shared_details : any
+  nodata : boolean = false;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http, public events: Events) {
       
@@ -193,8 +194,10 @@ export class HomePage {
         data => {
           console.log('url :' + 'http://54.172.94.76:9000/api/v1/customers/'+this.shared_details.userid+'/dashboard?email='+this.shared_details.useremail+'&lat='+this.shared_details.userlatitude+'&lng='+this.shared_details.userlongitude+'&pn='+start+'&ps='+end);
           this.dashboardlist = data.data;
-          if(start == 1 && this.dashboardlist.length == 0)
-               this.presentalert(this.shared_details.userlatitude, this.shared_details.userlongitude);
+          if(start == 1 && this.dashboardlist.length == 0){
+               //this.presentalert(this.shared_details.userlatitude, this.shared_details.userlongitude);
+               this.nodata = true;
+             }
           this.nextlength = data.data.length;
           loadingPopup.dismiss();
         },
@@ -202,19 +205,27 @@ export class HomePage {
       );
 }
 
-
+ retry(){
+   this.navCtrl.setRoot(HomePage, {}, {animate: true, direction: 'forward'});
+ }
  presentalert(lat, long) {
    let alert = this.alertCtrl.create({
       title: 'Restaurant Details',
       subTitle: "Sorry, but we could not find any restaurant at your location : latitude => "+lat+" and longitude => "+long,
-      buttons: ['OK']
+      buttons: [{
+              text    : 'Retry',
+              handler : () => {
+                console.log("retry");
+                this.navCtrl.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+              }
+            }]
     });
     alert.present();
 }
 
   //get direction
   direct(x,y){
-    this.url = "http://maps.google.com/maps/?q="+x+"," + y;
+    this.url = "http://maps.google.com/maps/?q="+x+"," + y+"&t=h&iwloc=A&hl=en";
     console.log(x+","+y);
     window.location.href = this.url;
   }
