@@ -191,7 +191,7 @@ addfav(){
       this.http.post(link, data1)
         .subscribe(data => {
           loadingPopup.dismiss();
-          this.confirm();
+          this.confirm('Favourites');
         }, error => {
           loadingPopup.dismiss();
           console.log("Oooops!");
@@ -222,7 +222,7 @@ addfav(){
         enc.http.post(link, data1)
           .subscribe(data => {
             console.log("Ok" + data1);
-            enc.confirm();
+            enc.confirm('Cart');
           }, error => {
             console.log("Oooops!");
           });
@@ -236,8 +236,8 @@ addfav(){
         enc.http.post(link, data1)
           .subscribe(data => {
             console.log("Ok" + data1);
-            enc.confirm();
-          }, error => {
+            enc.confirm('Cart');
+          }, error => {1
             console.log("Oooops!");
           });
       });
@@ -373,10 +373,10 @@ mealdetail(value, category){
    }
 
 
-confirm(){
+confirm(title){
    let alert = this.alertCtrl.create({
-      title: 'Favourites!',
-      subTitle: 'Item is added to your favourites',
+      title: title,
+      subTitle: 'Item is added to your ' + title,
       buttons: ['OK']
     });
     alert.present();

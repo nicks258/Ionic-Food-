@@ -52,7 +52,7 @@ export class HomePage {
   nodata : boolean = false;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http, public events: Events) {
-      
+
       //user_details
       this.user_details = this.get_user_details();
       this.user_id = this.get_userid();
@@ -62,18 +62,18 @@ export class HomePage {
       //location
       this.userLocation();
 
-     
-  } 
-   
+
+  }
+
 
    //get user location
    userLocation()
-        {    
+        {
               let loadingPopup = this.loadingCtrl.create({
               content: "Fetching Location...",
               spinner: 'circles'
               });
-              loadingPopup.present(); 
+              loadingPopup.present();
 
              let env = this;
 
@@ -107,7 +107,7 @@ export class HomePage {
         }
 
     //user details and preference
-    dashboarddetails(lat,long){ 
+    dashboarddetails(lat,long){
          this.mylatitude = lat;
          this.mylongitude = long;
          console.log(this.mylatitude + " " +  this.mylongitude);
@@ -122,13 +122,13 @@ export class HomePage {
 
 
     //get user details
-    get_user_details(){ 
+    get_user_details(){
         console.log("Getting user details");
         let userdetails, userdata;
         userdata = this.nativeStorage.getItem('user');
-        if (userdata.name == undefined && userdata.gender == undefined && userdata.picture == undefined && userdata.email == undefined)
+        if (userdata.email == undefined)//TODO HERE
              userdetails = dummy_user;
-        else 
+        else
              userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
         return userdetails;
       }
@@ -139,9 +139,10 @@ export class HomePage {
        console.log("Getting UserID");
        let userID_storage, userID;
         userID_storage = this.nativeStorage.getItem('USERID');
+        //TODO HERE
         if (userID_storage.customerId == undefined)
              userID = dummy_userId;
-        else 
+        else
              userID = userID_storage.customerId;
         return userID;
     }
@@ -153,12 +154,12 @@ export class HomePage {
           .map(res => res.json())
           .subscribe(
             data => {
-              console.log("user is already registered")
+              console.log("user is already registered");
               env.Fetchdashboard(env.data_start, env.data_limit);
             },
             err => {
               console.error(err);
-              console.log("user is not yet registered"); 
+              console.log("user is not yet registered");
               this.registerUser();    // register user to get preference
             }
           );
@@ -185,7 +186,7 @@ export class HomePage {
               content: "Loading Restaurants...",
               spinner: 'circles'
               });
-              loadingPopup.present(); 
+              loadingPopup.present();
 
     console.log("Fetching Dashboard");
     this.http.get('http://54.172.94.76:9000/api/v1/customers/'+this.shared_details.userid+'/dashboard?email='+this.shared_details.useremail+'&lat='+this.shared_details.userlatitude+'&lng='+this.shared_details.userlongitude+'&pn='+start+'&ps='+end)

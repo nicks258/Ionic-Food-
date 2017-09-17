@@ -13,20 +13,23 @@
 <ion-content class="body-content">
 
 <!-- card 1-->
-     <ion-card>
-        <ion-card-content>
+     <ion-card *ngFor="let cart of cart;let i =index">
+        <ion-card-content >
              <ion-row>
                  <ion-col col-2>
                     <img src="assets/img/background.png">
                  </ion-col>
-                  <ion-col col-10>
-                    Restaurant <br>
-                    Place
+
+                  <ion-col col-9 style="margin-top: 12px;">
+                    {{cart.item.name}} <br>
                  </ion-col>
+               <ion-col class="col" col-1="" (click)="removeCartItem(cart.item.id)">
+                 &#10005; <br>
+               </ion-col>
              </ion-row>
              <ion-row>
                  <ion-col col-6>
-                    Order Menu
+                    Description
                  </ion-col>
                  <ion-col col-3>
                     <ion-row style="border:solid 1px green">
@@ -34,7 +37,7 @@
                           <ion-icon name="add"></ion-icon>
                        </ion-col>
                        <ion-col col-4 style="padding: 0px 5px 0px 5px;">
-                           <span>0</span>
+                           <span>1</span>
                        </ion-col>
                        <ion-col col-4 style="padding: 0px 5px 0px 5px;">
                           <ion-icon name="remove"></ion-icon>
@@ -42,54 +45,54 @@
                     </ion-row>
                  </ion-col>
                   <ion-col col-3 style="text-align:right;padding-right:5px">
-                     Price
+
                  </ion-col>
              </ion-row>
              <hr>
-             Any Instruction? We promise to pass them on
+          {{cart.item.description}}
         </ion-card-content>
 
       </ion-card>
 <!-- card 1 ends -->
 
 <!-- card 2 starts -->
-      <ion-card>
-        <ion-card-content>
-             <ion-row>
-                 <ion-col col-2>
-                    <img src="assets/img/background.png">
-                 </ion-col>
-                  <ion-col col-10>
-                    Restaurant <br>
-                    Place
-                 </ion-col>
-             </ion-row>
-             <ion-row>
-                 <ion-col col-6>
-                    Order Menu
-                 </ion-col>
-                 <ion-col col-3>
-                    <ion-row style="border:solid 1px green">
-                       <ion-col col-4 style="padding: 0px 5px 0px 5px">
-                          <ion-icon name="add"></ion-icon>
-                       </ion-col>
-                       <ion-col col-4 style="padding: 0px 5px 0px 5px">
-                           <span>0</span>
-                       </ion-col>
-                       <ion-col col-4 style="padding: 0px 5px 0px 5px">
-                          <ion-icon name="remove"></ion-icon>
-                       </ion-col>
-                    </ion-row>
-                 </ion-col>
-                  <ion-col col-3 style="text-align:right;padding-right:5px">
-                     Price
-                 </ion-col>
-             </ion-row>
-             <hr>
-             Any Instruction? We promise to pass them on
-        </ion-card-content>
+      <!--<ion-card>-->
+        <!--<ion-card-content>-->
+             <!--<ion-row>-->
+                 <!--<ion-col col-2>-->
+                    <!--<img src="assets/img/background.png">-->
+                 <!--</ion-col>-->
+                  <!--<ion-col col-10>-->
+                    <!--Restaurant <br>-->
+                    <!--Place-->
+                 <!--</ion-col>-->
+             <!--</ion-row>-->
+             <!--<ion-row>-->
+                 <!--<ion-col col-6>-->
+                    <!--Order Menu-->
+                 <!--</ion-col>-->
+                 <!--<ion-col col-3>-->
+                    <!--<ion-row style="border:solid 1px green">-->
+                       <!--<ion-col col-4 style="padding: 0px 5px 0px 5px">-->
+                          <!--<ion-icon name="add"></ion-icon>-->
+                       <!--</ion-col>-->
+                       <!--<ion-col col-4 style="padding: 0px 5px 0px 5px">-->
+                           <!--<span>0</span>-->
+                       <!--</ion-col>-->
+                       <!--<ion-col col-4 style="padding: 0px 5px 0px 5px">-->
+                          <!--<ion-icon name="remove"></ion-icon>-->
+                       <!--</ion-col>-->
+                    <!--</ion-row>-->
+                 <!--</ion-col>-->
+                  <!--<ion-col col-3 style="text-align:right;padding-right:5px">-->
+                     <!--Price-->
+                 <!--</ion-col>-->
+             <!--</ion-row>-->
+             <!--<hr>-->
+             <!--Any Instruction? We promise to pass them on-->
+        <!--</ion-card-content>-->
 
-      </ion-card>
+      <!--</ion-card>-->
 <!-- card 2 ends -->
 
 <!-- bill card -->
@@ -108,7 +111,7 @@
             <hr>
              <ion-row>
                <ion-col col-10>
-	            Coupon Discount : 
+	            Coupon Discount :
 	            </ion-col>
 	            <ion-col col-2 style="text-align:right;padding-right:5px">
 	            Apply
@@ -116,7 +119,7 @@
             </ion-row>
             <ion-row>
                <ion-col col-10>
-	            Delivery Charges : 
+	            Delivery Charges :
 	            </ion-col>
 	            <ion-col col-2 style="text-align:right;padding-right:5px">
 	            price
@@ -127,7 +130,7 @@
                <ion-col col-6>
 	            </ion-col>
 	            <ion-col col-4 style="text-align:right;padding-right:5px">
-	            Total : 
+	            Total :
 	            </ion-col>
 	            <ion-col col-2 style="text-align:right;padding-right:5px">
 	            price
