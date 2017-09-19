@@ -2,7 +2,7 @@
 //All Constants and Configuration Variables
 
 var base_url= "http://54.172.94.76:9000/";
-var geolocation = false;
+var geolocation = true;
 var dummy_lat = 37.40879;
 var dummy_long = -121.98857;
 var FB_APP_ID = 125195224754920;

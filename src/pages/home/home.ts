@@ -54,8 +54,10 @@ export class HomePage {
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http, public events: Events) {
       
       //user_details
-      this.user_details = this.get_user_details();
-      this.user_id = this.get_userid();
+      //this.user_details = this.get_user_details();
+      this.get_user_details();
+      //this.user_id = this.get_userid();
+      this.get_userid();
       this.userReady = true;
 
 
@@ -124,27 +126,38 @@ export class HomePage {
     //get user details
     get_user_details(){ 
         console.log("Getting user details");
-        let userdetails, userdata;
-        userdata = this.nativeStorage.getItem('user');
-        if (userdata.name == undefined && userdata.gender == undefined && userdata.picture == undefined && userdata.email == undefined)
-             userdetails = dummy_user;
-        else 
-             userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
-        return userdetails;
+        this.nativeStorage.getItem('user').then(
+               userdata => {
+                   if (userdata.name == undefined && userdata.gender == undefined && userdata.picture == undefined && userdata.email == undefined)
+                        this.userdetails = dummy_user;
+                   else 
+                        this.userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
+               },
+               error => {
+                console.log("Dummy data");
+                this.userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
+              }
+        );
       }
 
 
     //get userid
     get_userid(){
        console.log("Getting UserID");
-       let userID_storage, userID;
-        userID_storage = this.nativeStorage.getItem('USERID');
-        if (userID_storage.customerId == undefined)
-             userID = dummy_userId;
-        else 
-             userID = userID_storage.customerId;
-        return userID;
+        this.nativeStorage.getItem('USERID').then(
+          userID_storage => {
+              if (userID_storage.customerId == undefined)
+                  this.userID = dummy_userId;
+              else 
+                  this.userID = userID_storage.customerId;
+          },
+          error => {
+              console.log("Dummy data");
+              this.userID = dummy_userId;
+          })
     }
+
+
 
    //get user preferences
     getPreferences(){

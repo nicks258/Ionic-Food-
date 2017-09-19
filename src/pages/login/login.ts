@@ -164,8 +164,10 @@ export class LoginPage {
           }, function (error) {
             loading.dismiss();
              setTimeout(() => {
-              env.alert();
-              console.log(error);
+              //env.alert();
+              //console.log(error);
+              nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            
              }, 1000);
           })
       }, function (error) {
@@ -174,8 +176,10 @@ export class LoginPage {
                 nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
             }
             else{
-                env.alert();
-                console.log(error);
+                //env.alert();
+                //console.log(error);
+                nav.setRoot(HomePage, {}, {animate: true, animation:'transition',duration:300, direction: 'forward'});
+            
             }
         setTimeout(() => {
            loading.dismiss();
