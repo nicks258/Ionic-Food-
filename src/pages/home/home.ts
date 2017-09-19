@@ -129,13 +129,13 @@ export class HomePage {
         this.nativeStorage.getItem('user').then(
                userdata => {
                    if (userdata.name == undefined && userdata.gender == undefined && userdata.picture == undefined && userdata.email == undefined)
-                        this.userdetails = dummy_user;
+                        this.user_details = dummy_user;
                    else 
-                        this.userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
+                        this.user_details = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
                },
                error => {
                 console.log("Dummy data");
-                this.userdetails = { name: userdata.name, gender: userdata.gender, picture: userdata.picture, email: userdata.email };
+                this.user_details = dummy_user
               }
         );
       }
@@ -147,13 +147,13 @@ export class HomePage {
         this.nativeStorage.getItem('USERID').then(
           userID_storage => {
               if (userID_storage.customerId == undefined)
-                  this.userID = dummy_userId;
+                  this.user_id = dummy_userId;
               else 
-                  this.userID = userID_storage.customerId;
+                  this.user_id = userID_storage.customerId;
           },
           error => {
               console.log("Dummy data");
-              this.userID = dummy_userId;
+              this.user_id = dummy_userId;
           })
     }
 
