@@ -18,7 +18,11 @@
 <ion-content  padding class="body-content">
   <ion-card  *ngFor="let favourities of favourities;let i =index" padding>
     <ion-card-header>
+      <ion-col class="col" col-9 (click)="removeFavouritesItem(favourities.item.id)" style="margin-left: 135px;">
       {{favourities.item.name}}
+      <ion-col class="col" col-2 (click)="removeFavouritesItem(favourities.item.id)" style="margin-left: 135px;">
+        ✕ <br>
+      </ion-col>
     </ion-card-header>
     <hr>
     <ion-card-content>

@@ -52,7 +52,7 @@ export class HomePage {
   nodata : boolean = false;
 
   constructor(public navCtrl: NavController, private alertCtrl: AlertController, public nativeStorage: NativeStorage,private geolocation: Geolocation, public loadingCtrl: LoadingController,public http: Http, public events: Events) {
-      
+
       //user_details
       //this.user_details = this.get_user_details();
       this.get_user_details();
@@ -64,18 +64,18 @@ export class HomePage {
       //location
       this.userLocation();
 
-     
-  } 
-   
+
+  }
+
 
    //get user location
    userLocation()
-        {    
+        {
               let loadingPopup = this.loadingCtrl.create({
               content: "Fetching Location...",
               spinner: 'circles'
               });
-              loadingPopup.present(); 
+              loadingPopup.present();
 
              let env = this;
 
@@ -109,7 +109,7 @@ export class HomePage {
         }
 
     //user details and preference
-    dashboarddetails(lat,long){ 
+    dashboarddetails(lat,long){
          this.mylatitude = lat;
          this.mylongitude = long;
          console.log(this.mylatitude + " " +  this.mylongitude);
@@ -124,7 +124,7 @@ export class HomePage {
 
 
     //get user details
-    get_user_details(){ 
+    get_user_details(){
         console.log("Getting user details");
         this.nativeStorage.getItem('user').then(
                userdata => {
@@ -166,12 +166,12 @@ export class HomePage {
           .map(res => res.json())
           .subscribe(
             data => {
-              console.log("user is already registered")
+              console.log("user is already registered");
               env.Fetchdashboard(env.data_start, env.data_limit);
             },
             err => {
               console.error(err);
-              console.log("user is not yet registered"); 
+              console.log("user is not yet registered");
               this.registerUser();    // register user to get preference
             }
           );
@@ -198,7 +198,7 @@ export class HomePage {
               content: "Loading Restaurants...",
               spinner: 'circles'
               });
-              loadingPopup.present(); 
+              loadingPopup.present();
 
     console.log("Fetching Dashboard");
     this.http.get('http://54.172.94.76:9000/api/v1/customers/'+this.shared_details.userid+'/dashboard?email='+this.shared_details.useremail+'&lat='+this.shared_details.userlatitude+'&lng='+this.shared_details.userlongitude+'&pn='+start+'&ps='+end)
